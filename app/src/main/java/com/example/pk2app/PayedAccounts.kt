@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -48,7 +49,15 @@ class PayedAccounts : Fragment() {
             // RecyclerView behavior
             recyclerView?.layoutManager = GridLayoutManager(activity, 2)
             // set the custom adapter to the RecyclerView
-            recyclerView?.adapter = AccountsPayedAdapter()
+            var adapter = AccountsPayedAdapter()
+            recyclerView?.adapter = adapter
+
+            adapter.setOnItemClickListener(object : AccountsPayedAdapter.onItemClickLister{
+                override fun onItemClick(i: Int) {
+                    Toast.makeText(activity,"You clicked on item no. $i", Toast.LENGTH_SHORT).show()
+                }
+            })
+
         }
 
 

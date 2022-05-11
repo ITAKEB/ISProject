@@ -14,10 +14,21 @@ class AccountsPayedAdapter : RecyclerView.Adapter<AccountsPayedAdapter.ViewHolde
 
     val prices = arrayOf("15000", "2000", "30000", "80000")
 
+    private lateinit var mListener : onItemClickLister
+
+    interface onItemClickLister{
+
+        fun onItemClick(i: Int)
+    }
+
+    fun setOnItemClickListener(listener: onItemClickLister){
+        mListener = listener
+    }
+
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
         val v =
             LayoutInflater.from(viewGroup.context).inflate(R.layout.card_accounts_payed, viewGroup, false)
-        return ViewHolder(v)
+        return ViewHolder(v, mListener)
 
     }
 
@@ -32,7 +43,7 @@ class AccountsPayedAdapter : RecyclerView.Adapter<AccountsPayedAdapter.ViewHolde
         return tables.size
     }
 
-    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+    inner class ViewHolder(itemView: View, listener: onItemClickLister): RecyclerView.ViewHolder(itemView){
         var itemTable: TextView
         var itemUser: TextView
         var itemPrice: TextView
@@ -41,6 +52,10 @@ class AccountsPayedAdapter : RecyclerView.Adapter<AccountsPayedAdapter.ViewHolde
             itemTable = itemView.findViewById(R.id.itemTable)
             itemUser = itemView.findViewById(R.id.itemUser)
             itemPrice = itemView.findViewById(R.id.itemPrice)
+
+            itemView.setOnClickListener {
+                listener.onItemClick(adapterPosition)
+            }
         }
     }
 

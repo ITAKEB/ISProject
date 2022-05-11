@@ -12,10 +12,21 @@ class ItemsAdapter : RecyclerView.Adapter<ItemsAdapter.ViewHolder>(){
 
     val description = arrayOf("110ml", "Misterioso", "52ml", "10ml")
 
+    private lateinit var mListener : onItemClickLister
+
+    interface onItemClickLister{
+
+        fun onItemClick(i: Int)
+    }
+
+    fun setOnItemClickListener(listener: onItemClickLister){
+        mListener = listener
+    }
+
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
         val v =
             LayoutInflater.from(viewGroup.context).inflate(R.layout.card_item, viewGroup, false)
-        return ViewHolder(v)
+        return ViewHolder(v,mListener)
 
     }
 
@@ -29,13 +40,17 @@ class ItemsAdapter : RecyclerView.Adapter<ItemsAdapter.ViewHolder>(){
         return items.size
     }
 
-    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+    inner class ViewHolder(itemView: View, listener: onItemClickLister): RecyclerView.ViewHolder(itemView){
         var itemTitle: TextView
         var itemDescription: TextView
 
         init{
             itemTitle = itemView.findViewById(R.id.itemTitle)
             itemDescription = itemView.findViewById(R.id.itemDescription)
+
+            itemView.setOnClickListener {
+                listener.onItemClick(adapterPosition)
+            }
         }
     }
 

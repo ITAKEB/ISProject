@@ -3,6 +3,7 @@ package com.example.pk2app
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
@@ -14,10 +15,21 @@ class AccountsAdapter: RecyclerView.Adapter<AccountsAdapter.ViewHolder>() {
 
     val prices = arrayOf("15000", "2000", "30000", "80000")
 
+    private lateinit var mListener : onItemClickLister
+
+    interface onItemClickLister{
+
+        fun onItemClick(i: Int)
+    }
+
+    fun setOnItemClickListener(listener: onItemClickLister){
+        mListener = listener
+    }
+
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
         val v =
             LayoutInflater.from(viewGroup.context).inflate(R.layout.card_accounts, viewGroup, false)
-        return ViewHolder(v)
+        return ViewHolder(v, mListener)
 
     }
 
@@ -32,15 +44,16 @@ class AccountsAdapter: RecyclerView.Adapter<AccountsAdapter.ViewHolder>() {
         return tables.size
     }
 
-    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        var itemTable: TextView
-        var itemUser: TextView
-        var itemPrice: TextView
+    inner class ViewHolder(itemView: View, listener: onItemClickLister): RecyclerView.ViewHolder(itemView){
+        var itemTable : TextView = itemView.findViewById(R.id.itemTable)
+        var itemUser : TextView = itemView.findViewById(R.id.itemUser)
+        var itemPrice : TextView = itemView.findViewById(R.id.itemPrice)
 
         init{
-            itemTable = itemView.findViewById(R.id.itemTable)
-            itemUser = itemView.findViewById(R.id.itemUser)
-            itemPrice = itemView.findViewById(R.id.itemPrice)
+
+            itemView.setOnClickListener {
+                listener.onItemClick(adapterPosition)
+            }
         }
     }
 }

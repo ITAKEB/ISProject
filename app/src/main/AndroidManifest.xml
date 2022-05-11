@@ -10,13 +10,30 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pk2App">
         <activity
+            android:name=".AItems"
+            android:exported="false"
+            android:theme="@style/Theme.Pk2App.NoActionBar">
+
+
+        </activity>
+        <activity
+            android:name=".AaccountsPayed"
+            android:exported="false"
+            android:theme="@style/Theme.Pk2App.NoActionBar"/>
+        <activity
+            android:name=".Adelete"
+            android:exported="false"
+            android:theme="@style/Theme.Pk2App.NoActionBar" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Pk2App.NoActionBar"
-            android:windowSoftInputMode="adjustPan"> >
+            android:windowSoftInputMode="adjustPan">
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
