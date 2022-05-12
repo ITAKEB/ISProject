@@ -10,16 +10,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pk2App">
         <activity
+            android:name=".AccountView"
+            android:exported="false"
+            />
+        <activity
             android:name=".AItems"
             android:exported="false"
-            android:theme="@style/Theme.Pk2App.NoActionBar">
-
-
-        </activity>
+            android:theme="@style/Theme.Pk2App.NoActionBar"></activity>
         <activity
             android:name=".AaccountsPayed"
             android:exported="false"
-            android:theme="@style/Theme.Pk2App.NoActionBar"/>
+            android:theme="@style/Theme.Pk2App.NoActionBar" />
         <activity
             android:name=".Adelete"
             android:exported="false"

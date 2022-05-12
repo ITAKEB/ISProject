@@ -1,5 +1,7 @@
 package com.example.pk2app
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -61,9 +63,14 @@ class Home : Fragment() {
             recyclerView?.adapter = adapter
 
             adapter.setOnItemClickListener(object : AccountsAdapter.onItemClickLister{
+
                 override fun onItemClick(i: Int) {
                     Toast.makeText(activity,"You clicked on item no. $i",Toast.LENGTH_SHORT).show()
+                    val newActivity = Intent(activity, AccountView::class.java)
+                    startActivity(newActivity)
+                    //overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 }
+
             })
 
          }

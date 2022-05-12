@@ -1,5 +1,6 @@
 package com.example.pk2app
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -55,6 +56,10 @@ class PayedAccounts : Fragment() {
             adapter.setOnItemClickListener(object : AccountsPayedAdapter.onItemClickLister{
                 override fun onItemClick(i: Int) {
                     Toast.makeText(activity,"You clicked on item no. $i", Toast.LENGTH_SHORT).show()
+
+                    val newActivity = Intent(activity, AccountView::class.java)
+                    startActivity(newActivity)
+
                 }
             })
 
