@@ -76,7 +76,7 @@ class Adelete : AppCompatActivity(), NavigationView.OnNavigationItemSelectedList
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         }
-//        drawer.closeDrawer(GravityCompat.START)
+        drawer.closeDrawer(GravityCompat.START, false)
         return true
     }
     override fun onPostCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {

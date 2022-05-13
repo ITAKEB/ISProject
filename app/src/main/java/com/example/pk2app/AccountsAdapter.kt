@@ -54,6 +54,8 @@ class AccountsAdapter: RecyclerView.Adapter<AccountsAdapter.ViewHolder>() {
             itemView.setOnClickListener {
                 listener.onItemClick(adapterPosition)
             }
+
+
         }
     }
 }

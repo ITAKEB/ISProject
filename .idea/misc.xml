@@ -9,7 +9,7 @@
         <entry key="..\:/Users/Peanut/AndroidStudioProjects/Pk2App/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1995" />
         <entry key="..\:/Users/Peanut/AndroidStudioProjects/Pk2App/app/src/main/res/drawable/ic_payment.xml" value="0.295" />
         <entry key="..\:/Users/Peanut/AndroidStudioProjects/Pk2App/app/src/main/res/layout-small/fragment_home.xml" value="0.371875" />
-        <entry key="..\:/Users/Peanut/AndroidStudioProjects/Pk2App/app/src/main/res/layout/activity_aaccounts_payed.xml" value="0.1" />
+        <entry key="..\:/Users/Peanut/AndroidStudioProjects/Pk2App/app/src/main/res/layout/activity_aaccounts_payed.xml" value="0.18" />
         <entry key="..\:/Users/Peanut/AndroidStudioProjects/Pk2App/app/src/main/res/layout/activity_account_view.xml" value="0.25" />
         <entry key="..\:/Users/Peanut/AndroidStudioProjects/Pk2App/app/src/main/res/layout/activity_adelete.xml" value="0.10182370820668693" />
         <entry key="..\:/Users/Peanut/AndroidStudioProjects/Pk2App/app/src/main/res/layout/activity_aitems.xml" value="0.34556159420289856" />
@@ -18,8 +18,9 @@
         <entry key="..\:/Users/Peanut/AndroidStudioProjects/Pk2App/app/src/main/res/layout/card_accounts.xml" value="0.371875" />
         <entry key="..\:/Users/Peanut/AndroidStudioProjects/Pk2App/app/src/main/res/layout/card_accounts_payed.xml" value="0.371875" />
         <entry key="..\:/Users/Peanut/AndroidStudioProjects/Pk2App/app/src/main/res/layout/card_item.xml" value="0.2" />
+        <entry key="..\:/Users/Peanut/AndroidStudioProjects/Pk2App/app/src/main/res/layout/card_item_account.xml" value="0.27890625" />
         <entry key="..\:/Users/Peanut/AndroidStudioProjects/Pk2App/app/src/main/res/layout/content_main.xml" value="0.22" />
-        <entry key="..\:/Users/Peanut/AndroidStudioProjects/Pk2App/app/src/main/res/layout/fragment_delete.xml" value="0.33" />
+        <entry key="..\:/Users/Peanut/AndroidStudioProjects/Pk2App/app/src/main/res/layout/fragment_delete.xml" value="0.18" />
         <entry key="..\:/Users/Peanut/AndroidStudioProjects/Pk2App/app/src/main/res/layout/fragment_first.xml" value="0.371875" />
         <entry key="..\:/Users/Peanut/AndroidStudioProjects/Pk2App/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/Users/Peanut/AndroidStudioProjects/Pk2App/app/src/main/res/layout/fragment_items.xml" value="0.371875" />
