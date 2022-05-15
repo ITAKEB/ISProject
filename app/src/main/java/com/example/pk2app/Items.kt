@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -53,14 +54,24 @@ class Items : Fragment() {
             var adapter = ItemsAdapter()
             recyclerView?.adapter = adapter
 
-            adapter.setOnItemClickListener(object : ItemsAdapter.onItemClickLister{
+            adapter.setOnItemClickListener(object : ItemsAdapter.onItemClickLister {
                 override fun onItemClick(i: Int) {
-                    Toast.makeText(activity,"You clicked on item no. $i", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, "You clicked on item no. $i", Toast.LENGTH_SHORT)
+                        .show()
                 }
             })
 
         }
 
+        val btAddNewItem = view?.findViewById<FloatingActionButton>(R.id.btaddItem)
+
+        btAddNewItem?.setOnClickListener {
+            PopUpAddItem(
+                onSubmitClickListener = { quantity ->
+                    Toast.makeText(activity, "Usted ingreso: $quantity", Toast.LENGTH_SHORT).show()
+                }
+            ).show(parentFragmentManager,"dialog")
+        }
 
 
     }

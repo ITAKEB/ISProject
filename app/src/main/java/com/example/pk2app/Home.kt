@@ -78,8 +78,8 @@ class Home : Fragment() {
 
         btAddItem?.setOnClickListener {
             PopUpAddCustomer(
-                onSubmitClickListener = { quantitiy ->
-
+                onSubmitClickListener = { quantity ->
+                    Toast.makeText(activity, "Usted ingreso: $quantity", Toast.LENGTH_SHORT).show()
                 }
             ).show(parentFragmentManager,"dialog")
         }
