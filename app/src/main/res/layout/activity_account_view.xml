@@ -12,13 +12,13 @@
         android:layout_marginTop="0dp">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewItemsAccount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxHeight="500dp"
-            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
-            android:id="@+id/recyclerViewItemsAccount"
+            android:maxHeight="500dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

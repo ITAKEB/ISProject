@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -74,6 +75,16 @@ class Home : Fragment() {
             })
 
          }
+
+        val btAddItem = view?.findViewById<FloatingActionButton>(R.id.btaddItem)
+
+        btAddItem?.setOnClickListener {
+            PopUpAddItemTable(
+                onSubmitClickListener = { quantitiy ->
+
+                }
+            ).show(parentFragmentManager,"dialog")
+        }
 
 
     }
