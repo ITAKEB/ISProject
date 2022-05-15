@@ -21,9 +21,19 @@ class PopUpAddCustomer(
         builder.setView(dialogView)
 
         val btClose = dialogView.findViewById<MaterialButton>(R.id.btClose)
+        val btAdd = dialogView.findViewById<MaterialButton>(R.id.btAgregar)
+        val btCancel = dialogView.findViewById<MaterialButton>(R.id.btCancelar)
+
+        btAdd.setOnClickListener {
+            onSubmitClickListener.invoke("1".toString().toFloat())
+            dismiss()
+        }
 
         btClose.setOnClickListener {
-            onSubmitClickListener.invoke("1".toString().toFloat())
+            dismiss()
+        }
+
+        btCancel.setOnClickListener {
             dismiss()
         }
 
