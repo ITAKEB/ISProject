@@ -1,22 +1,22 @@
-package com.example.pk2app
+package com.example.pk2app.ui
 
 import android.app.AlertDialog
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.widget.AdapterView
 import androidx.fragment.app.DialogFragment
+import com.example.pk2app.R
 import com.google.android.material.button.MaterialButton
 
-class PopUpAddItemCustomer(
+class PopUpAddItem (
     private val onSubmitClickListener: (Float) -> Unit
 
-):DialogFragment() {
+) : DialogFragment(){
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val inflater = this.layoutInflater
-        val dialogView = inflater.inflate(R.layout.popup_add_item_customer, null)
+        val dialogView = inflater.inflate(R.layout.popup_add_item, null)
 
         val builder = AlertDialog.Builder(requireContext())
         builder.setView(dialogView)
@@ -44,4 +44,5 @@ class PopUpAddItemCustomer(
         return dialog
 
     }
+
 }

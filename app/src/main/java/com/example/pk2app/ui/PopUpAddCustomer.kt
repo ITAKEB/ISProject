@@ -1,4 +1,4 @@
-package com.example.pk2app
+package com.example.pk2app.ui
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
+import com.example.pk2app.R
 import com.google.android.material.button.MaterialButton
 
 class PopUpAddCustomer(

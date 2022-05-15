@@ -16,15 +16,18 @@
         <activity
             android:name=".AItems"
             android:exported="false"
-            android:theme="@style/Theme.Pk2App.NoActionBar"></activity>
+            android:theme="@style/Theme.Pk2App.NoActionBar"
+            android:windowSoftInputMode="adjustPan"></activity>
         <activity
             android:name=".AaccountsPayed"
             android:exported="false"
-            android:theme="@style/Theme.Pk2App.NoActionBar" />
+            android:theme="@style/Theme.Pk2App.NoActionBar"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".Adelete"
             android:exported="false"
-            android:theme="@style/Theme.Pk2App.NoActionBar" />
+            android:theme="@style/Theme.Pk2App.NoActionBar"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

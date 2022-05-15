@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import com.example.pk2app.ui.PopUpAreUSure
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,6 +38,19 @@ class Delete : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_delete, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        var btDelete = view?.findViewById<FloatingActionButton>(R.id.btdeleteForever)
+
+        btDelete?.setOnClickListener {
+            PopUpAreUSure(
+                onSubmitClickListener = {quantity ->
+                    Toast.makeText(activity, "Usted ingreso: $quantity", Toast.LENGTH_SHORT).show()
+                }
+            ).show(parentFragmentManager,"dialog")
+        }
     }
 
     companion object {

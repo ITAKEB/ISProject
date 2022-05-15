@@ -9,6 +9,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pk2app.ui.AccountsPayedAdapter
+import com.example.pk2app.ui.PopUpAreUSure
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,6 +65,17 @@ class PayedAccounts : Fragment() {
 
                 }
             })
+
+            var btDelete = view?.findViewById<FloatingActionButton>(R.id.btdeletePayAccounts)
+
+            btDelete?.setOnClickListener {
+                PopUpAreUSure(
+                    onSubmitClickListener = { quantity ->
+                        Toast.makeText(activity, "Usted ingreso: $quantity", Toast.LENGTH_SHORT).show()
+
+                    }
+                ).show(parentFragmentManager,"dialog")
+            }
 
         }
 
