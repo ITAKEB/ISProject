@@ -1,6 +1,5 @@
 package com.example.pk2app
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -79,7 +77,7 @@ class Home : Fragment() {
         val btAddItem = view?.findViewById<FloatingActionButton>(R.id.btaddItem)
 
         btAddItem?.setOnClickListener {
-            PopUpAddItemTable(
+            PopUpAddCustomer(
                 onSubmitClickListener = { quantitiy ->
 
                 }

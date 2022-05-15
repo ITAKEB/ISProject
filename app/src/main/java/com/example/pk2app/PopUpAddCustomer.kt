@@ -5,18 +5,17 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.widget.AdapterView
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.button.MaterialButton
 
-class PopUpAddItemTable(
+class PopUpAddCustomer(
     private val onSubmitClickListener: (Float) -> Unit
 
 ) :DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val inflater = this.layoutInflater
-        val dialogView = inflater.inflate(R.layout.popup_add_item_table, null)
+        val dialogView = inflater.inflate(R.layout.popup_add_customer, null)
 
         val builder = AlertDialog.Builder(requireContext())
         builder.setView(dialogView)
