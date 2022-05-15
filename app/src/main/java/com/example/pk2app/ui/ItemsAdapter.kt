@@ -1,10 +1,11 @@
-package com.example.pk2app
+package com.example.pk2app.ui
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pk2app.R
 
 class ItemsAdapter : RecyclerView.Adapter<ItemsAdapter.ViewHolder>(){
 
@@ -30,7 +31,7 @@ class ItemsAdapter : RecyclerView.Adapter<ItemsAdapter.ViewHolder>(){
 
     }
 
-    override fun onBindViewHolder(viewHolder: ItemsAdapter.ViewHolder, i: Int) {
+    override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) {
         viewHolder.itemTitle.text = items[i]
         viewHolder.itemDescription.text = description[i]
 

@@ -5,6 +5,10 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pk2app.ui.ItemsAccountAdapter
+import com.example.pk2app.ui.PopUpAddItemCustomer
+import com.example.pk2app.ui.PopUpAreUSure
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class AccountView : AppCompatActivity() {
@@ -27,6 +31,16 @@ class AccountView : AppCompatActivity() {
             PopUpAddItemCustomer(
                 onSubmitClickListener = {quantity ->
                     Toast.makeText(this, "Usted ingreso: $quantity", Toast.LENGTH_SHORT).show()
+                }
+            ).show(supportFragmentManager, "dialog")
+        }
+
+        val btPay = findViewById<MaterialButton>(R.id.btPay)
+
+        btPay.setOnClickListener {
+            PopUpAreUSure(
+                onSubmitClickListener = {quantity ->
+                    Toast.makeText(this,"Hola $quantity",Toast.LENGTH_SHORT).show()
                 }
             ).show(supportFragmentManager, "dialog")
         }

@@ -1,13 +1,13 @@
-package com.example.pk2app
+package com.example.pk2app.ui
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pk2app.R
 
-class AccountsAdapter: RecyclerView.Adapter<AccountsAdapter.ViewHolder>() {
+class AccountsPayedAdapter : RecyclerView.Adapter<AccountsPayedAdapter.ViewHolder>() {
 
     val tables = arrayOf("Mesa 1", "Mesa 2", "Mesa 3", "Mesa 4")
 
@@ -28,12 +28,12 @@ class AccountsAdapter: RecyclerView.Adapter<AccountsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
         val v =
-            LayoutInflater.from(viewGroup.context).inflate(R.layout.card_accounts, viewGroup, false)
+            LayoutInflater.from(viewGroup.context).inflate(R.layout.card_accounts_payed, viewGroup, false)
         return ViewHolder(v, mListener)
 
     }
 
-    override fun onBindViewHolder(viewHolder: AccountsAdapter.ViewHolder, i: Int) {
+    override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) {
         viewHolder.itemTable.text = tables[i]
         viewHolder.itemUser.text = users[i]
         viewHolder.itemPrice.text = "$ "+prices[i]
@@ -45,17 +45,19 @@ class AccountsAdapter: RecyclerView.Adapter<AccountsAdapter.ViewHolder>() {
     }
 
     inner class ViewHolder(itemView: View, listener: onItemClickLister): RecyclerView.ViewHolder(itemView){
-        var itemTable : TextView = itemView.findViewById(R.id.itemTable)
-        var itemUser : TextView = itemView.findViewById(R.id.itemUser)
-        var itemPrice : TextView = itemView.findViewById(R.id.itemPrice)
+        var itemTable: TextView
+        var itemUser: TextView
+        var itemPrice: TextView
 
         init{
+            itemTable = itemView.findViewById(R.id.itemTable)
+            itemUser = itemView.findViewById(R.id.itemUser)
+            itemPrice = itemView.findViewById(R.id.itemPrice)
 
             itemView.setOnClickListener {
                 listener.onItemClick(adapterPosition)
             }
-
-
         }
     }
+
 }
