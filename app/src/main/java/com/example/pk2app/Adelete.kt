@@ -63,10 +63,10 @@ class Adelete : AppCompatActivity(), NavigationView.OnNavigationItemSelectedList
             }
             R.id.navDelete -> {
                 Toast.makeText(this, "Delete", Toast.LENGTH_SHORT).show()
-//                supportFragmentManager.beginTransaction().replace(R.id.flContent, Delete()).commit()
-                val newActivity = Intent(this, Adelete::class.java)
-                startActivity(newActivity)
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+////                supportFragmentManager.beginTransaction().replace(R.id.flContent, Delete()).commit()
+//                val newActivity = Intent(this, Adelete::class.java)
+//                startActivity(newActivity)
+//                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
             R.id.navPayments -> {
                 Toast.makeText(this, "Payed Accounts", Toast.LENGTH_SHORT).show()

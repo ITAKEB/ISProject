@@ -69,10 +69,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when (item.itemId) {
             R.id.navHome -> {
                 Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show()
-//                supportFragmentManager.beginTransaction().replace(R.id.flContent, Home()).commit()
-                val newActivity = Intent(this, MainActivity::class.java)
-                startActivity(newActivity)
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+////                supportFragmentManager.beginTransaction().replace(R.id.flContent, Home()).commit()
+//                val newActivity = Intent(this, MainActivity::class.java)
+//                startActivity(newActivity)
+//                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
             }
             R.id.navItems -> {

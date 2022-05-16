@@ -70,10 +70,10 @@ class AaccountsPayed : AppCompatActivity() , NavigationView.OnNavigationItemSele
             }
             R.id.navPayments -> {
                 Toast.makeText(this, "Payed Accounts", Toast.LENGTH_SHORT).show()
-//                supportFragmentManager.beginTransaction().replace(R.id.flContent, PayedAccounts()).commit()
-                val newActivity = Intent(this, AaccountsPayed::class.java)
-                startActivity(newActivity)
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+////                supportFragmentManager.beginTransaction().replace(R.id.flContent, PayedAccounts()).commit()
+//                val newActivity = Intent(this, AaccountsPayed::class.java)
+//                startActivity(newActivity)
+//                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         }
         drawer.closeDrawer(GravityCompat.START, false)
