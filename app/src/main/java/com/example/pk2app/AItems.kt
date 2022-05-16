@@ -58,10 +58,10 @@ class AItems : AppCompatActivity() , NavigationView.OnNavigationItemSelectedList
             }
             R.id.navItems -> {
                 Toast.makeText(this, "Items", Toast.LENGTH_SHORT).show()
-//                supportFragmentManager.beginTransaction().replace(R.id.flContent, Items()).commit()
-                val newActivity = Intent(this, AItems::class.java)
-                startActivity(newActivity)
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+////                supportFragmentManager.beginTransaction().replace(R.id.flContent, Items()).commit()
+//                val newActivity = Intent(this, AItems::class.java)
+//                startActivity(newActivity)
+//                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
 
             }
             R.id.navDelete -> {
