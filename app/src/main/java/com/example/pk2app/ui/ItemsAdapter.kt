@@ -5,13 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pk2app.Item
 import com.example.pk2app.R
 
-class ItemsAdapter : RecyclerView.Adapter<ItemsAdapter.ViewHolder>(){
+class ItemsAdapter ( items: MutableList<Item>) : RecyclerView.Adapter<ItemsAdapter.ViewHolder>(){
 
-    val items = arrayOf("Cerveza Aguila", "Shot 1", "Aguardiente", "Ronsito")
-
-    val description = arrayOf("110ml", "Misterioso", "52ml", "10ml")
+    val items = items
 
     private lateinit var mListener : onItemClickLister
 
@@ -32,8 +31,8 @@ class ItemsAdapter : RecyclerView.Adapter<ItemsAdapter.ViewHolder>(){
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) {
-        viewHolder.itemTitle.text = items[i]
-        viewHolder.itemDescription.text = description[i]
+        viewHolder.itemTitle.text = items[i].getName()
+        viewHolder.itemDescription.text = items[i].getDescription()
 
     }
 
