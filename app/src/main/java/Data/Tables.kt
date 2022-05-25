@@ -1,5 +1,6 @@
 package Data
 
+import com.example.pk2app.Board
 import com.example.pk2app.Item
 
 class Tables
@@ -20,9 +21,9 @@ class Tables
             val ID = "id"
             val TABLE_NAME= "boards"
             val COLUMN_BOARD = "board"
-            val COLUMN_CUSTOMES = "customer"
+            val COLUMN_CUSTOMER = "customer"
             val COLUMN_TOTAL = "totalPrice"
-            val boards: MutableList<Board> = ArrayList()
+            val boards: MutableList<com.example.pk2app.Board> = ArrayList()
         }
     }
 }

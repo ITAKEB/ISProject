@@ -1,5 +1,6 @@
 package com.example.pk2app
 
+import Data.DataDbHelper
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,6 +11,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pk2app.ui.AccountsAdapter
+import com.example.pk2app.ui.ItemsAdapter
 import com.example.pk2app.ui.PopUpAddCustomer
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -29,8 +31,9 @@ class Home : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-    private var layoutManager: RecyclerView.LayoutManager? = null
-    private var adapter: RecyclerView.Adapter<AccountsAdapter.ViewHolder>? = null
+    private lateinit var db: DataDbHelper
+    private lateinit var adapter: AccountsAdapter
+    private var recyclerView: RecyclerView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,41 +55,50 @@ class Home : Fragment() {
 
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
-        val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerViewAccounts)
+        recyclerView = view?.findViewById(R.id.recyclerViewAccounts)
+        db = DataDbHelper(context)
 
+        updateRecyclerView(recyclerView)
+
+        val btAddItem = view?.findViewById<FloatingActionButton>(R.id.btaddItem)
+
+        btAddItem?.setOnClickListener {
+            PopUpAddCustomer(
+                onSubmitClickListener = { board ->
+                    Toast.makeText(activity, "Usted ingreso a: ${board.getCustomer()}", Toast.LENGTH_SHORT).show()
+                    db.insertBoard(board.getBoard(),board.getCustomer(),board.getTotalPrice())
+
+                    updateRecyclerView(recyclerView)
+
+                    adapter.notifyDataSetChanged()
+                }
+            ).show(parentFragmentManager,"dialog")
+        }
+
+
+    }
+
+    private fun updateRecyclerView(recyclerView: RecyclerView?) {
+        val dataBoards = db.getBoardData()
 
         recyclerView.apply {
             // set a LinearLayoutManager to handle Android
             // RecyclerView behavior
             recyclerView?.layoutManager = GridLayoutManager(activity, 2)
             // set the custom adapter to the RecyclerView
-            var adapter = AccountsAdapter()
+            adapter = AccountsAdapter(dataBoards)
             recyclerView?.adapter = adapter
 
-            adapter.setOnItemClickListener(object : AccountsAdapter.onItemClickLister{
-
+            adapter.setOnItemClickListener(object : AccountsAdapter.onItemClickLister {
                 override fun onItemClick(i: Int) {
-                    Toast.makeText(activity,"You clicked on item no. $i",Toast.LENGTH_SHORT).show()
-                    val newActivity = Intent(activity, AccountView::class.java)
+                    Toast.makeText(activity, "You clicked on item no. $i", Toast.LENGTH_SHORT)
+                        .show()
+                    val newActivity = Intent(activity, AccountView()::class.java)
                     startActivity(newActivity)
-                    //overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 }
-
             })
 
-         }
-
-        val btAddItem = view?.findViewById<FloatingActionButton>(R.id.btaddItem)
-
-        btAddItem?.setOnClickListener {
-            PopUpAddCustomer(
-                onSubmitClickListener = { quantity ->
-                    Toast.makeText(activity, "Usted ingreso: $quantity", Toast.LENGTH_SHORT).show()
-                }
-            ).show(parentFragmentManager,"dialog")
         }
-
-
     }
 
     companion object {

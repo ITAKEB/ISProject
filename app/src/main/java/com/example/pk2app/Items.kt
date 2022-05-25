@@ -27,7 +27,10 @@ class Items : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
     private lateinit var db: DataDbHelper
+    private lateinit var adapter: ItemsAdapter
+    private var recyclerView: RecyclerView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,18 +50,41 @@ class Items : Fragment() {
 
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
-        val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerViewItems)
+        recyclerView = view?.findViewById(R.id.recyclerViewItems)
         db = DataDbHelper(context)
-        val dataItems = db.getData()
+
+        updateRecyclerView(recyclerView)
 
 
+        val btAddNewItem = view?.findViewById<FloatingActionButton>(R.id.btaddItem)
+
+        btAddNewItem?.setOnClickListener {
+            PopUpAddItem(
+                onSubmitClickListener = { item ->
+                    Toast.makeText(activity, "Usted ingreso: ${item.getName()}", Toast.LENGTH_SHORT).show()
+                    db.insertItem(item.getName(),item.getPrice(),item.getDescription())
+                    //Refresh new data on this fragment
+
+                    updateRecyclerView(recyclerView)
+
+                    adapter.notifyDataSetChanged()
+
+                }
+            ).show(parentFragmentManager,"dialog")
+        }
+
+
+    }
+
+    private fun updateRecyclerView(recyclerView: RecyclerView?) {
+        val dataItems = db.getItemData()
 
         recyclerView.apply {
             // set a LinearLayoutManager to handle Android
             // RecyclerView behavior
             recyclerView?.layoutManager = GridLayoutManager(activity, 2)
             // set the custom adapter to the RecyclerView
-            var adapter = ItemsAdapter(dataItems)
+            adapter = ItemsAdapter(dataItems)
             recyclerView?.adapter = adapter
 
             adapter.setOnItemClickListener(object : ItemsAdapter.onItemClickLister {
@@ -69,19 +95,6 @@ class Items : Fragment() {
             })
 
         }
-
-        val btAddNewItem = view?.findViewById<FloatingActionButton>(R.id.btaddItem)
-
-        btAddNewItem?.setOnClickListener {
-            PopUpAddItem(
-                onSubmitClickListener = { item ->
-                    Toast.makeText(activity, "Usted ingreso: ${item.getName()}", Toast.LENGTH_SHORT).show()
-                    db.insertItem(item.getName(),item.getPrice(),item.getDescription())
-                }
-            ).show(parentFragmentManager,"dialog")
-        }
-
-
     }
 
     companion object {

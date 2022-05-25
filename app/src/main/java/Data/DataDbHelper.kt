@@ -6,6 +6,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.widget.Toast
+import com.example.pk2app.Board
 import com.example.pk2app.Item
 
 class DataDbHelper(context: Context?) :
@@ -32,6 +33,14 @@ class DataDbHelper(context: Context?) :
                     + Tables.Items.COLUMN_PRICE + " TEXT NOT NULL,"
                     + Tables.Items. COLUMN_DESCRIPTION + " TEXT NULL)"
         )
+
+        db!!.execSQL(
+            "CREATE TABLE " + Tables.Board.TABLE_NAME
+                    + " (" + Tables.Board.ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + Tables.Board.COLUMN_BOARD + " TEXT NOT NULL,"
+                    + Tables.Board.COLUMN_CUSTOMER + " TEXT NOT NULL,"
+                    + Tables.Board. COLUMN_TOTAL + " TEXT NULL)"
+        )
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, p1: Int, p2: Int) {
@@ -45,7 +54,8 @@ class DataDbHelper(context: Context?) :
         db.insert(Tables.Items.TABLE_NAME, null, values)
     }
 
-    fun getData(): MutableList<Item> {
+
+    fun getItemData(): MutableList<Item> {
         Tables.Items.items.clear()
         val columnas = arrayOf(
             Tables.Items.ID,
@@ -72,5 +82,41 @@ class DataDbHelper(context: Context?) :
         return Tables.Items.items
 
     }
+
+    fun insertBoard(board: String, customer: String, total: String) {
+        values.put(Tables.Board.COLUMN_BOARD, board)
+        values.put(Tables.Board.COLUMN_CUSTOMER, customer)
+        values.put(Tables.Board. COLUMN_TOTAL, total)
+        db.insert(Tables.Board.TABLE_NAME, null, values)
+    }
+
+    fun getBoardData(): MutableList<Board>{
+        Tables.Board.boards.clear()
+        val columnas = arrayOf(
+            Tables.Board.ID,
+            Tables.Board.COLUMN_BOARD,
+            Tables.Board.COLUMN_CUSTOMER,
+            Tables.Board.COLUMN_TOTAL
+        )
+
+        val c = db.query(Tables.Board.TABLE_NAME, columnas, null, null, null, null, null)
+
+        if (c.moveToFirst()) {
+            do {
+                Tables.Board.boards.add(
+                    Board(
+                        c.getInt(0),
+                        c.getString(1),
+                        c.getString(2),
+                        c.getString(3)
+                    )
+                )
+            } while (c.moveToNext())
+        }
+
+        return Tables.Board.boards
+
+    }
+
 
 }

@@ -11,7 +11,7 @@ import com.example.pk2app.ui.PopUpAreUSure
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class AccountView : AppCompatActivity() {
+class AccountView (boardID:Int, items: MutableList<Integer>) : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_account_view)

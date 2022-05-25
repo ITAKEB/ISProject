@@ -25,7 +25,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:backgroundTint="@color/white"
-            app:icon="@drawable/ic_edit"
+            app:icon="@drawable/ic_delete"
             app:iconGravity="textStart"
             app:iconPadding="0dp"
             app:iconTint="@color/black"
