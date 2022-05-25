@@ -141,16 +141,8 @@ class DataDbHelper(context: Context?) :
     }
 
     fun getBoard(id: Int): MutableList<Board>  {
-        //Tables.Boards.boards.clear()
-        var board:Board
-        val columnas = arrayOf(
-            Tables.Boards.ID,
-            Tables.Boards.COLUMN_BOARD,
-            Tables.Boards.COLUMN_CUSTOMER,
-            Tables.Boards.COLUMN_TOTAL
-        )
+        Tables.Boards.actualBoard.clear()
 
-//        val c = db.query(Tables.Boards.TABLE_NAME, columnas, null, null, null, null, null)
         val c = db.rawQuery(
             "SELECT * FROM " + Tables.Boards.TABLE_NAME + " WHERE id = ? LIMIT 1",
             arrayOf(id.toString())
@@ -182,7 +174,7 @@ class DataDbHelper(context: Context?) :
     }
 
     fun getPayedBoardData(): MutableList<Board> {
-        Tables.Boards.boards.clear()
+        Tables.PayedBoards.boards.clear()
         val columnas = arrayOf(
             Tables.PayedBoards.ID,
             Tables.PayedBoards.COLUMN_BOARD,
@@ -205,7 +197,7 @@ class DataDbHelper(context: Context?) :
             } while (c.moveToNext())
         }
 
-        return Tables.Boards.boards
+        return Tables.PayedBoards.boards
 
     }
 

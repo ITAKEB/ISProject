@@ -11,8 +11,8 @@ import com.example.pk2app.R
 import com.google.android.material.button.MaterialButton
 
 class PopUpAreUSure(
-    private val onSubmitClickListener: (Board) -> Unit,
-    private val board: Board?) : DialogFragment() {
+    private val onSubmitClickListener: () -> Unit
+) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val inflater = this.layoutInflater
@@ -25,14 +25,7 @@ class PopUpAreUSure(
         val btCancel = dialogView.findViewById<MaterialButton>(R.id.btCancel)
 
         btCont.setOnClickListener {
-            onSubmitClickListener.invoke(
-                Board(
-                    board?.getId().toString().toInt(),
-                    board?.getBoard().toString(),
-                    board?.getCustomer().toString(),
-                    board?.getTotalPrice().toString()
-                )
-            )
+            onSubmitClickListener.invoke()
             dismiss()
         }
 

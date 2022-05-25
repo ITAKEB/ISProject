@@ -53,42 +53,25 @@ class PayedAccounts : Fragment() {
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
         recyclerView = view?.findViewById(R.id.recyclerViewAccountsPayed)
+        db = DataDbHelper(context)
 
-        recyclerView.apply {
-            // set a LinearLayoutManager to handle Android
-            // RecyclerView behavior
-            recyclerView?.layoutManager = GridLayoutManager(activity, 2)
-            // set the custom adapter to the RecyclerView
+        updateRecyclerView(recyclerView)
 
-            val dataPayedBoards = db.getPayedBoardData()
-            var adapter = AccountsPayedAdapter(dataPayedBoards)
-            recyclerView?.adapter = adapter
+        var btDelete = view?.findViewById<FloatingActionButton>(R.id.btdeletePayAccounts)
 
-            adapter.setOnItemClickListener(object : AccountsPayedAdapter.onItemClickLister{
-                override fun onItemClick(i: Int) {
-                    Toast.makeText(activity,"You clicked on item no. $i", Toast.LENGTH_SHORT).show()
-
-                    val newActivity = Intent(activity, AccountView::class.java)
-                    startActivity(newActivity)
-
-                }
-            })
-
-            var btDelete = view?.findViewById<FloatingActionButton>(R.id.btdeletePayAccounts)
-
-            btDelete?.setOnClickListener {
+        btDelete?.setOnClickListener {
                 PopUpAreUSure(
-                    onSubmitClickListener = { Board ->
-                        Toast.makeText(activity, "Usted pagó: ${Board.getBoard()}", Toast.LENGTH_SHORT).show()
+                    onSubmitClickListener = {
+                        Toast.makeText(activity, "Usted pagó: ", Toast.LENGTH_SHORT).show()
 
-                    }, null
+                    }
                 ).show(parentFragmentManager,"dialog")
             }
 
         }
 
 
-    }
+
 
     private fun updateRecyclerView(recyclerView: RecyclerView?) {
         val dataPayedBoards = db.getPayedBoardData()
@@ -105,14 +88,17 @@ class PayedAccounts : Fragment() {
                 override fun onItemClick(id: Int) {
                     Toast.makeText(activity, "You clicked on item no. ${id}", Toast.LENGTH_SHORT)
                         .show()
-                    val newActivity = Intent(activity, AccountView::class.java)
-                    newActivity.putExtra("boardId",id)
-                    startActivity(newActivity)
+//                    val newActivity = Intent(activity, AccountView::class.java)
+//                    newActivity.putExtra("boardId", id)
+//                    startActivity(newActivity)
                 }
             })
 
         }
     }
+
+
+
 
     companion object {
         /**

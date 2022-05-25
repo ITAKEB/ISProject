@@ -16,7 +16,7 @@ class AccountsPayedAdapter(payedBoards: MutableList<Board>) : RecyclerView.Adapt
 
     interface onItemClickLister{
 
-        fun onItemClick(i: Int)
+        fun onItemClick(id: Int)
     }
 
     fun setOnItemClickListener(listener: onItemClickLister){
@@ -52,7 +52,7 @@ class AccountsPayedAdapter(payedBoards: MutableList<Board>) : RecyclerView.Adapt
             itemPrice = itemView.findViewById(R.id.itemPrice)
 
             itemView.setOnClickListener {
-                listener.onItemClick(adapterPosition)
+                listener.onItemClick(payedBoards[adapterPosition].getId())
             }
         }
     }

@@ -58,10 +58,14 @@ class AccountView: AppCompatActivity() {
 
         btPay.setOnClickListener {
             PopUpAreUSure(
-                onSubmitClickListener = {quantity ->
-                    Toast.makeText(this,"Hola $quantity",Toast.LENGTH_SHORT).show()
-                },
-                null
+                onSubmitClickListener = {
+                    val board:Board = db.getBoard(id)[0]
+
+                    Toast.makeText(this,"Hola ${board.getId()}",Toast.LENGTH_SHORT).show()
+                    db.insertPayedBoard(board.getId(),board.getBoard(),board.getCustomer(),board.getTotalPrice())
+                    //Aquí se debería eliminar la cuenta de Accounts (home)
+
+                }
             ).show(supportFragmentManager, "dialog")
         }
     }
