@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.widget.Toast
 import com.example.pk2app.Board
 import com.example.pk2app.Item
+import com.example.pk2app.ItemBoard
+import com.example.pk2app.Items
 
 class DataDbHelper(context: Context?) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
@@ -35,11 +37,21 @@ class DataDbHelper(context: Context?) :
         )
 
         db!!.execSQL(
-            "CREATE TABLE " + Tables.Board.TABLE_NAME
-                    + " (" + Tables.Board.ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    + Tables.Board.COLUMN_BOARD + " TEXT NOT NULL,"
-                    + Tables.Board.COLUMN_CUSTOMER + " TEXT NOT NULL,"
-                    + Tables.Board. COLUMN_TOTAL + " TEXT NULL)"
+            "CREATE TABLE " + Tables.Boards.TABLE_NAME
+                    + " (" + Tables.Boards.ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + Tables.Boards.COLUMN_BOARD + " TEXT NOT NULL,"
+                    + Tables.Boards.COLUMN_CUSTOMER + " TEXT NOT NULL,"
+                    + Tables.Boards. COLUMN_TOTAL + " TEXT NULL)"
+        )
+
+        db!!.execSQL(
+            "CREATE TABLE " + Tables.ItemsBoard.TABLE_NAME
+                    + " (" + Tables.ItemsBoard.ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + Tables.ItemsBoard.COLUMN_BOARDID + " INTEGER NOT NULL,"
+                    + Tables.ItemsBoard.COLUMN_ITEM_TITLE + " TEXT NOT NULL,"
+                    + Tables.ItemsBoard.COLUMN_ITEM_TOTAL + " INTEGER NOT NULL,"
+                    + Tables.ItemsBoard.COLUMN_ITEM_PRICE + " INTEGER NOT NULL,"
+                    + Tables.ItemsBoard. COLUMN_QUANTITY + " INTEGER NOT NULL)"
         )
     }
 
@@ -84,26 +96,26 @@ class DataDbHelper(context: Context?) :
     }
 
     fun insertBoard(board: String, customer: String, total: String) {
-        values.put(Tables.Board.COLUMN_BOARD, board)
-        values.put(Tables.Board.COLUMN_CUSTOMER, customer)
-        values.put(Tables.Board. COLUMN_TOTAL, total)
-        db.insert(Tables.Board.TABLE_NAME, null, values)
+        values.put(Tables.Boards.COLUMN_BOARD, board)
+        values.put(Tables.Boards.COLUMN_CUSTOMER, customer)
+        values.put(Tables.Boards. COLUMN_TOTAL, total)
+        db.insert(Tables.Boards.TABLE_NAME, null, values)
     }
 
     fun getBoardData(): MutableList<Board>{
-        Tables.Board.boards.clear()
+        Tables.Boards.boards.clear()
         val columnas = arrayOf(
-            Tables.Board.ID,
-            Tables.Board.COLUMN_BOARD,
-            Tables.Board.COLUMN_CUSTOMER,
-            Tables.Board.COLUMN_TOTAL
+            Tables.Boards.ID,
+            Tables.Boards.COLUMN_BOARD,
+            Tables.Boards.COLUMN_CUSTOMER,
+            Tables.Boards.COLUMN_TOTAL
         )
 
-        val c = db.query(Tables.Board.TABLE_NAME, columnas, null, null, null, null, null)
+        val c = db.query(Tables.Boards.TABLE_NAME, columnas, null, null, null, null, null)
 
         if (c.moveToFirst()) {
             do {
-                Tables.Board.boards.add(
+                Tables.Boards.boards.add(
                     Board(
                         c.getInt(0),
                         c.getString(1),
@@ -114,9 +126,51 @@ class DataDbHelper(context: Context?) :
             } while (c.moveToNext())
         }
 
-        return Tables.Board.boards
+        return Tables.Boards.boards
 
     }
+
+    fun insertItemBoard(boardId: Int, itemTitle: String, itemTotal: Long, itemPrice: Long, quantity: Int) {
+        values.put(Tables.ItemsBoard.COLUMN_BOARDID, boardId)
+        values.put(Tables.ItemsBoard.COLUMN_ITEM_TITLE, itemTitle)
+        values.put(Tables.ItemsBoard.COLUMN_ITEM_TOTAL, itemTotal)
+        values.put(Tables.ItemsBoard.COLUMN_ITEM_PRICE, itemPrice)
+        values.put(Tables.ItemsBoard.COLUMN_QUANTITY, quantity)
+        db.insert(Tables.ItemsBoard.TABLE_NAME, null, values)
+    }
+
+    fun getItemsBoardData(): MutableList<ItemBoard>{
+        Tables.ItemsBoard.itemsBoard.clear()
+        val columnas = arrayOf(
+            Tables.ItemsBoard.ID,
+            Tables.ItemsBoard.COLUMN_BOARDID,
+            Tables.ItemsBoard.COLUMN_ITEM_TITLE,
+            Tables.ItemsBoard.COLUMN_ITEM_TOTAL,
+            Tables.ItemsBoard.COLUMN_ITEM_PRICE,
+            Tables.ItemsBoard.COLUMN_QUANTITY
+        )
+
+        val c = db.query(Tables.ItemsBoard.TABLE_NAME, columnas, null, null, null, null, null)
+
+        if (c.moveToFirst()) {
+            do {
+                Tables.ItemsBoard.itemsBoard.add(
+                    ItemBoard(
+                        c.getInt(0),
+                        c.getInt(1),
+                        c.getString(2),
+                        c.getLong(3),
+                        c.getLong(4),
+                        c.getInt(5)
+                    )
+                )
+            } while (c.moveToNext())
+        }
+
+        return Tables.ItemsBoard.itemsBoard
+
+    }
+
 
 
 }

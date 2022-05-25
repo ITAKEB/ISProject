@@ -18,7 +18,7 @@ class AccountsAdapter ( boards: MutableList<Board>): RecyclerView.Adapter<Accoun
 
     interface onItemClickLister{
 
-        fun onItemClick(i: Int)
+        fun onItemClick(id: Int)
     }
 
     fun setOnItemClickListener(listener: onItemClickLister){
@@ -51,7 +51,7 @@ class AccountsAdapter ( boards: MutableList<Board>): RecyclerView.Adapter<Accoun
         init{
 
             itemView.setOnClickListener {
-                listener.onItemClick(adapterPosition)
+                listener.onItemClick(boards[adapterPosition].getId())
             }
 
 

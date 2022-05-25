@@ -90,10 +90,11 @@ class Home : Fragment() {
             recyclerView?.adapter = adapter
 
             adapter.setOnItemClickListener(object : AccountsAdapter.onItemClickLister {
-                override fun onItemClick(i: Int) {
-                    Toast.makeText(activity, "You clicked on item no. $i", Toast.LENGTH_SHORT)
+                override fun onItemClick(id: Int) {
+                    Toast.makeText(activity, "You clicked on item no. ${id}", Toast.LENGTH_SHORT)
                         .show()
-                    val newActivity = Intent(activity, AccountView()::class.java)
+                    val newActivity = Intent(activity, AccountView::class.java)
+                    newActivity.putExtra("boardId",id)
                     startActivity(newActivity)
                 }
             })

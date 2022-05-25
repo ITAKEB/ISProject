@@ -1,19 +1,17 @@
 package com.example.pk2app.ui
 
+import Data.Tables
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pk2app.ItemBoard
 import com.example.pk2app.R
 
-class ItemsAccountAdapter: RecyclerView.Adapter<ItemsAccountAdapter.ViewHolder>() {
+class ItemsAccountAdapter(dataItemBoard: MutableList<ItemBoard>): RecyclerView.Adapter<ItemsAccountAdapter.ViewHolder>() {
 
-    val items = arrayOf("Cerveza Aguila", "Shot 1", "Aguardiente", "Ronsito")
-
-    val counts = arrayOf("0", "5", "10", "11")
-
-    val prices = arrayOf("0", "5000", "10000", "11000")
+    val itemsBoards =  dataItemBoard
 
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
@@ -23,14 +21,14 @@ class ItemsAccountAdapter: RecyclerView.Adapter<ItemsAccountAdapter.ViewHolder>(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) {
-        viewHolder.itemAccountTitle.text = items[i]
-        viewHolder.itemAccountCount.text = counts[i]
-        viewHolder.itemAccountPrice.text = "$"+prices[i]
+        viewHolder.itemAccountTitle.text = itemsBoards[i].getItemTitle()
+        viewHolder.itemAccountCount.text = itemsBoards[i].getQuantity().toString()
+        viewHolder.itemAccountPrice.text = "$"+itemsBoards[i].getItemPrice()
 
     }
 
     override fun getItemCount(): Int {
-        return items.size
+        return itemsBoards.size
     }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
