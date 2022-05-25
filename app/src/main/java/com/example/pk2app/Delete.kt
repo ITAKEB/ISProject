@@ -48,7 +48,7 @@ class Delete : Fragment() {
             PopUpAreUSure(
                 onSubmitClickListener = {quantity ->
                     Toast.makeText(activity, "Usted ingreso: $quantity", Toast.LENGTH_SHORT).show()
-                }
+                },null
             ).show(parentFragmentManager,"dialog")
         }
     }

@@ -33,7 +33,7 @@ class DataDbHelper(context: Context?) :
                     + " (" + Tables.Items.ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                     + Tables.Items.COLUMN_NAME + " TEXT NOT NULL,"
                     + Tables.Items.COLUMN_PRICE + " TEXT NOT NULL,"
-                    + Tables.Items. COLUMN_DESCRIPTION + " TEXT NULL)"
+                    + Tables.Items.COLUMN_DESCRIPTION + " TEXT NULL)"
         )
 
         db!!.execSQL(
@@ -41,7 +41,7 @@ class DataDbHelper(context: Context?) :
                     + " (" + Tables.Boards.ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                     + Tables.Boards.COLUMN_BOARD + " TEXT NOT NULL,"
                     + Tables.Boards.COLUMN_CUSTOMER + " TEXT NOT NULL,"
-                    + Tables.Boards. COLUMN_TOTAL + " TEXT NULL)"
+                    + Tables.Boards.COLUMN_TOTAL + " TEXT NULL)"
         )
 
         db!!.execSQL(
@@ -51,8 +51,18 @@ class DataDbHelper(context: Context?) :
                     + Tables.ItemsBoard.COLUMN_ITEM_TITLE + " TEXT NOT NULL,"
                     + Tables.ItemsBoard.COLUMN_ITEM_TOTAL + " INTEGER NOT NULL,"
                     + Tables.ItemsBoard.COLUMN_ITEM_PRICE + " INTEGER NOT NULL,"
-                    + Tables.ItemsBoard. COLUMN_QUANTITY + " INTEGER NOT NULL)"
+                    + Tables.ItemsBoard.COLUMN_QUANTITY + " INTEGER NOT NULL)"
         )
+
+        db!!.execSQL(
+            "CREATE TABLE " + Tables.PayedBoards.TABLE_NAME
+                    + " (" + Tables.PayedBoards.ID + " INTEGER PRIMARY KEY,"
+                    + Tables.PayedBoards.COLUMN_BOARD + " TEXT NOT NULL,"
+                    + Tables.PayedBoards.COLUMN_CUSTOMER + " TEXT NOT NULL,"
+                    + Tables.PayedBoards.COLUMN_TOTAL + " TEXT NULL)"
+        )
+
+
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, p1: Int, p2: Int) {
@@ -62,7 +72,7 @@ class DataDbHelper(context: Context?) :
     fun insertItem(name: String, price: String, description: String) {
         values.put(Tables.Items.COLUMN_NAME, name)
         values.put(Tables.Items.COLUMN_PRICE, price)
-        values.put(Tables.Items. COLUMN_DESCRIPTION, description)
+        values.put(Tables.Items.COLUMN_DESCRIPTION, description)
         db.insert(Tables.Items.TABLE_NAME, null, values)
     }
 
@@ -73,7 +83,7 @@ class DataDbHelper(context: Context?) :
             Tables.Items.ID,
             Tables.Items.COLUMN_NAME,
             Tables.Items.COLUMN_PRICE,
-            Tables.Items. COLUMN_DESCRIPTION
+            Tables.Items.COLUMN_DESCRIPTION
         )
 
         val c = db.query(Tables.Items.TABLE_NAME, columnas, null, null, null, null, null)
@@ -98,11 +108,11 @@ class DataDbHelper(context: Context?) :
     fun insertBoard(board: String, customer: String, total: String) {
         values.put(Tables.Boards.COLUMN_BOARD, board)
         values.put(Tables.Boards.COLUMN_CUSTOMER, customer)
-        values.put(Tables.Boards. COLUMN_TOTAL, total)
+        values.put(Tables.Boards.COLUMN_TOTAL, total)
         db.insert(Tables.Boards.TABLE_NAME, null, values)
     }
 
-    fun getBoardData(): MutableList<Board>{
+    fun getBoardData(): MutableList<Board> {
         Tables.Boards.boards.clear()
         val columnas = arrayOf(
             Tables.Boards.ID,
@@ -130,7 +140,82 @@ class DataDbHelper(context: Context?) :
 
     }
 
-    fun insertItemBoard(boardId: Int, itemTitle: String, itemTotal: Long, itemPrice: Long, quantity: Int) {
+    fun getBoard(id: Int): MutableList<Board>  {
+        //Tables.Boards.boards.clear()
+        var board:Board
+        val columnas = arrayOf(
+            Tables.Boards.ID,
+            Tables.Boards.COLUMN_BOARD,
+            Tables.Boards.COLUMN_CUSTOMER,
+            Tables.Boards.COLUMN_TOTAL
+        )
+
+//        val c = db.query(Tables.Boards.TABLE_NAME, columnas, null, null, null, null, null)
+        val c = db.rawQuery(
+            "SELECT * FROM " + Tables.Boards.TABLE_NAME + " WHERE id = ? LIMIT 1",
+            arrayOf(id.toString())
+        )
+        if (c.moveToFirst()) {
+            do {
+                Tables.Boards.actualBoard.add(
+                    Board(
+                        c.getInt(0),
+                        c.getString(1),
+                        c.getString(2),
+                        c.getString(3)
+                    )
+                )
+            } while (c.moveToNext())
+        }
+
+        return Tables.Boards.actualBoard
+
+
+    }
+
+    fun insertPayedBoard(id: Int, board: String, customer: String, total: String) {
+        values.put(Tables.PayedBoards.ID, id)
+        values.put(Tables.PayedBoards.COLUMN_BOARD, board)
+        values.put(Tables.PayedBoards.COLUMN_CUSTOMER, customer)
+        values.put(Tables.PayedBoards.COLUMN_TOTAL, total)
+        db.insert(Tables.PayedBoards.TABLE_NAME, null, values)
+    }
+
+    fun getPayedBoardData(): MutableList<Board> {
+        Tables.Boards.boards.clear()
+        val columnas = arrayOf(
+            Tables.PayedBoards.ID,
+            Tables.PayedBoards.COLUMN_BOARD,
+            Tables.PayedBoards.COLUMN_CUSTOMER,
+            Tables.PayedBoards.COLUMN_TOTAL
+        )
+
+        val c = db.query(Tables.PayedBoards.TABLE_NAME, columnas, null, null, null, null, null)
+
+        if (c.moveToFirst()) {
+            do {
+                Tables.PayedBoards.boards.add(
+                    Board(
+                        c.getInt(0),
+                        c.getString(1),
+                        c.getString(2),
+                        c.getString(3)
+                    )
+                )
+            } while (c.moveToNext())
+        }
+
+        return Tables.Boards.boards
+
+    }
+
+    fun insertItemBoard(
+        boardId: Int,
+        itemTitle: String,
+        itemTotal: Long,
+        itemPrice: Long,
+        quantity: Int
+    ) {
         values.put(Tables.ItemsBoard.COLUMN_BOARDID, boardId)
         values.put(Tables.ItemsBoard.COLUMN_ITEM_TITLE, itemTitle)
         values.put(Tables.ItemsBoard.COLUMN_ITEM_TOTAL, itemTotal)
@@ -139,19 +224,13 @@ class DataDbHelper(context: Context?) :
         db.insert(Tables.ItemsBoard.TABLE_NAME, null, values)
     }
 
-    fun getItemsBoardData(): MutableList<ItemBoard>{
+    fun getItemsBoardData(id:Int): MutableList<ItemBoard> {
         Tables.ItemsBoard.itemsBoard.clear()
-        val columnas = arrayOf(
-            Tables.ItemsBoard.ID,
-            Tables.ItemsBoard.COLUMN_BOARDID,
-            Tables.ItemsBoard.COLUMN_ITEM_TITLE,
-            Tables.ItemsBoard.COLUMN_ITEM_TOTAL,
-            Tables.ItemsBoard.COLUMN_ITEM_PRICE,
-            Tables.ItemsBoard.COLUMN_QUANTITY
+
+        val c = db.rawQuery(
+            "SELECT * FROM " + Tables.ItemsBoard.TABLE_NAME + " WHERE board_id = ?",
+            arrayOf(id.toString())
         )
-
-        val c = db.query(Tables.ItemsBoard.TABLE_NAME, columnas, null, null, null, null, null)
-
         if (c.moveToFirst()) {
             do {
                 Tables.ItemsBoard.itemsBoard.add(
@@ -170,7 +249,6 @@ class DataDbHelper(context: Context?) :
         return Tables.ItemsBoard.itemsBoard
 
     }
-
 
 
 }

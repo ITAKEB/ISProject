@@ -1,5 +1,6 @@
 package com.example.pk2app
 
+import Data.DataDbHelper
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pk2app.ui.AccountsAdapter
 import com.example.pk2app.ui.AccountsPayedAdapter
 import com.example.pk2app.ui.PopUpAreUSure
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -28,6 +30,10 @@ class PayedAccounts : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private lateinit var db: DataDbHelper
+    private lateinit var adapter: AccountsPayedAdapter
+    private var recyclerView: RecyclerView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -46,14 +52,16 @@ class PayedAccounts : Fragment() {
 
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
-        val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerViewAccountsPayed)
+        recyclerView = view?.findViewById(R.id.recyclerViewAccountsPayed)
 
         recyclerView.apply {
             // set a LinearLayoutManager to handle Android
             // RecyclerView behavior
             recyclerView?.layoutManager = GridLayoutManager(activity, 2)
             // set the custom adapter to the RecyclerView
-            var adapter = AccountsPayedAdapter()
+
+            val dataPayedBoards = db.getPayedBoardData()
+            var adapter = AccountsPayedAdapter(dataPayedBoards)
             recyclerView?.adapter = adapter
 
             adapter.setOnItemClickListener(object : AccountsPayedAdapter.onItemClickLister{
@@ -70,16 +78,40 @@ class PayedAccounts : Fragment() {
 
             btDelete?.setOnClickListener {
                 PopUpAreUSure(
-                    onSubmitClickListener = { quantity ->
-                        Toast.makeText(activity, "Usted ingreso: $quantity", Toast.LENGTH_SHORT).show()
+                    onSubmitClickListener = { Board ->
+                        Toast.makeText(activity, "Usted pagó: ${Board.getBoard()}", Toast.LENGTH_SHORT).show()
 
-                    }
+                    }, null
                 ).show(parentFragmentManager,"dialog")
             }
 
         }
 
 
+    }
+
+    private fun updateRecyclerView(recyclerView: RecyclerView?) {
+        val dataPayedBoards = db.getPayedBoardData()
+
+        recyclerView.apply {
+            // set a LinearLayoutManager to handle Android
+            // RecyclerView behavior
+            recyclerView?.layoutManager = GridLayoutManager(activity, 2)
+            // set the custom adapter to the RecyclerView
+            adapter = AccountsPayedAdapter(dataPayedBoards)
+            recyclerView?.adapter = adapter
+
+            adapter.setOnItemClickListener(object : AccountsPayedAdapter.onItemClickLister {
+                override fun onItemClick(id: Int) {
+                    Toast.makeText(activity, "You clicked on item no. ${id}", Toast.LENGTH_SHORT)
+                        .show()
+                    val newActivity = Intent(activity, AccountView::class.java)
+                    newActivity.putExtra("boardId",id)
+                    startActivity(newActivity)
+                }
+            })
+
+        }
     }
 
     companion object {

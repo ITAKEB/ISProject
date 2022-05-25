@@ -18,11 +18,12 @@ class AccountView: AppCompatActivity() {
 
     private lateinit var db: DataDbHelper
     private lateinit var adapter:ItemsAccountAdapter
+    private var id:Int = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var boardId:Int = intent.extras?.get("boardId").toString().toInt()
+        id = intent.extras?.get("boardId").toString().toInt()
         setContentView(R.layout.activity_account_view)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -31,7 +32,7 @@ class AccountView: AppCompatActivity() {
         db = DataDbHelper(this)
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerViewItemsAccount)
-        val dataItemBoards = db.getItemsBoardData()
+        val dataItemBoards = db.getItemsBoardData(id)
 
         adapter = ItemsAccountAdapter(dataItemBoards)
 
@@ -44,7 +45,7 @@ class AccountView: AppCompatActivity() {
             PopUpAddItemCustomer(
                 onSubmitClickListener = {itemBoard ->
                     Toast.makeText(this, "Usted ingreso: ${itemBoard.getItemTitle()}", Toast.LENGTH_SHORT).show()
-                    db.insertItemBoard(boardId,itemBoard.getItemTitle(), itemBoard.getItemTotal(),itemBoard.getItemPrice(),itemBoard.getQuantity())
+                    db.insertItemBoard(id,itemBoard.getItemTitle(), itemBoard.getItemTotal(),itemBoard.getItemPrice(),itemBoard.getQuantity())
 
                     updateRecyclerView(recyclerView)
 
@@ -59,14 +60,15 @@ class AccountView: AppCompatActivity() {
             PopUpAreUSure(
                 onSubmitClickListener = {quantity ->
                     Toast.makeText(this,"Hola $quantity",Toast.LENGTH_SHORT).show()
-                }
+                },
+                null
             ).show(supportFragmentManager, "dialog")
         }
     }
 
 
     private fun updateRecyclerView(recyclerView: RecyclerView) {
-        val dataItemBoards = db.getItemsBoardData()
+        val dataItemBoards = db.getItemsBoardData(id)
 
         adapter = ItemsAccountAdapter(dataItemBoards)
         recyclerView.layoutManager = GridLayoutManager(this, 1)
@@ -79,6 +81,5 @@ class AccountView: AppCompatActivity() {
         return true
     }
 
-    fun createPopUp(){}
 
 }

@@ -5,15 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pk2app.Board
 import com.example.pk2app.R
 
-class AccountsPayedAdapter : RecyclerView.Adapter<AccountsPayedAdapter.ViewHolder>() {
+class AccountsPayedAdapter(payedBoards: MutableList<Board>) : RecyclerView.Adapter<AccountsPayedAdapter.ViewHolder>() {
 
-    val tables = arrayOf("Mesa 1", "Mesa 2", "Mesa 3", "Mesa 4")
-
-    val users = arrayOf("Tomas", "Viviana", "Alfonso", "Sergio")
-
-    val prices = arrayOf("15000", "2000", "30000", "80000")
+    var payedBoards = payedBoards
 
     private lateinit var mListener : onItemClickLister
 
@@ -34,14 +31,14 @@ class AccountsPayedAdapter : RecyclerView.Adapter<AccountsPayedAdapter.ViewHolde
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) {
-        viewHolder.itemTable.text = tables[i]
-        viewHolder.itemUser.text = users[i]
-        viewHolder.itemPrice.text = "$ "+prices[i]
+        viewHolder.itemTable.text = payedBoards[i].getBoard()
+        viewHolder.itemUser.text = payedBoards[i].getCustomer()
+        viewHolder.itemPrice.text = "$ "+payedBoards[i].getTotalPrice()
 
     }
 
     override fun getItemCount(): Int {
-        return tables.size
+        return payedBoards.size
     }
 
     inner class ViewHolder(itemView: View, listener: onItemClickLister): RecyclerView.ViewHolder(itemView){

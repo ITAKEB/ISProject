@@ -25,12 +25,20 @@ class Tables
             val COLUMN_CUSTOMER = "customer"
             val COLUMN_TOTAL = "totalPrice"
             val boards: MutableList<Board> = ArrayList()
+            val actualBoard: MutableList<Board> = ArrayList()
         }
     }
 
-    /*
-    * constructor(id:Int, boardId:Int, itemTitle:String, itemTotal:Int, itemPrice:Int, quantity:Int) {
-    * */
+    abstract class PayedBoards{
+        companion object{
+            val ID = "id"
+            val TABLE_NAME= "payed_boards"
+            val COLUMN_BOARD = "board"
+            val COLUMN_CUSTOMER = "customer"
+            val COLUMN_TOTAL = "totalPrice"
+            val boards: MutableList<Board> = ArrayList()
+        }
+    }
 
     abstract class ItemsBoard{
         companion object{
