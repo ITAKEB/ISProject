@@ -90,7 +90,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
-                android:hint="Descripcion"
+                android:hint="Descripcion/Precio-"
                 app:hintTextColor="@color/black">
 
                 <com.google.android.material.textfield.TextInputEditText

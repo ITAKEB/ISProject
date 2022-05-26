@@ -8,11 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pk2app.ui.AccountsPayedAdapter
 import com.example.pk2app.ui.ItemsAdapter
 import com.example.pk2app.ui.PopUpAddItem
+import com.example.pk2app.ui.PopUpAreUSure
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 // TODO: Rename parameter arguments, choose names that match
@@ -55,7 +57,7 @@ class Items : Fragment() {
         recyclerView = view?.findViewById(R.id.recyclerViewItems)
         db = DataDbHelper(context)
 
-        updateRecyclerView(recyclerView)
+        updateRecyclerView(recyclerView,this)
 
 
         val btAddNewItem = view?.findViewById<FloatingActionButton>(R.id.btaddItem)
@@ -67,7 +69,7 @@ class Items : Fragment() {
                     db.insertItem(item.getName(),item.getPrice(),item.getDescription())
                     //Refresh new data on this fragment
 
-                    updateRecyclerView(recyclerView)
+                    updateRecyclerView(recyclerView,this)
 
                     adapter.notifyDataSetChanged()
 
@@ -78,7 +80,7 @@ class Items : Fragment() {
 
     }
 
-    private fun updateRecyclerView(recyclerView: RecyclerView?) {
+    private fun updateRecyclerView(recyclerView: RecyclerView?, fr:Fragment) {
         val dataItems = db.getItemData()
 
         recyclerView.apply {
@@ -98,19 +100,29 @@ class Items : Fragment() {
 
             adapter.setOnBtDeleteClickListener(object : ItemsAdapter.onBtClickLister {
                 override fun onBtClick(id: Int) {
-                    Toast.makeText(activity, "You delete item no. ${id}", Toast.LENGTH_SHORT)
-                        .show()
-                    db.deleteItem(id)
 
-//                val newActivity = Intent(activity, AItems::class.java)
-//
-//                startActivity(newActivity)
+
+
+                PopUpAreUSure(
+                    onSubmitClickListener = {
+                        db.deleteItem(id)
+                        Toast.makeText(activity, "You delete item no. ${id}", Toast.LENGTH_SHORT)
+                            .show()
+                        val fragmentManager: FragmentManager = parentFragmentManager
+                        fragmentManager.beginTransaction().detach(fr).commit()
+                        fragmentManager.beginTransaction().attach(fr).commit()
+                    }
+                ).show(parentFragmentManager,"dialog")
+
                 }
 
             })
 
         }
+
     }
+
+
 
     companion object {
         /**

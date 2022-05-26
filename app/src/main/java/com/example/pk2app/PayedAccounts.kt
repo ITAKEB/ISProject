@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pk2app.ui.AccountsAdapter
@@ -55,7 +56,7 @@ class PayedAccounts : Fragment() {
         recyclerView = view?.findViewById(R.id.recyclerViewAccountsPayed)
         db = DataDbHelper(context)
 
-        updateRecyclerView(recyclerView)
+        updateRecyclerView(recyclerView, this)
 
         var btDelete = view?.findViewById<FloatingActionButton>(R.id.btdeletePayAccounts)
 
@@ -75,7 +76,7 @@ class PayedAccounts : Fragment() {
 
 
 
-    private fun updateRecyclerView(recyclerView: RecyclerView?) {
+    private fun updateRecyclerView(recyclerView: RecyclerView?, fr:Fragment) {
         val dataPayedBoards = db.getPayedBoardData()
 
         recyclerView.apply {
@@ -98,15 +99,27 @@ class PayedAccounts : Fragment() {
 
             })
 
+
             adapter.setOnBtDeleteClickListener(object : AccountsPayedAdapter.onBtClickLister {
                 override fun onBtClick(id: Int) {
-                    Toast.makeText(activity, "You delete item no. ${id}", Toast.LENGTH_SHORT)
-                        .show()
-                    db.deletePayedBoard(id)
 
-//                    val newActivity = Intent(activity, AaccountsPayed::class.java)
+//                    val newActivity = Intent(activity, MainActivity::class.java)
 //
 //                    startActivity(newActivity)
+                    PopUpAreUSure(
+                        onSubmitClickListener = {
+                            db.deletePayedBoard(id)
+                            Toast.makeText(activity, "You delete item no. ${id}", Toast.LENGTH_SHORT)
+                                .show()
+                            val fragmentManager:FragmentManager = parentFragmentManager
+                            fragmentManager.beginTransaction().detach(fr).commit()
+                            fragmentManager.beginTransaction().attach(fr).commit()
+                        }
+                    ).show(parentFragmentManager,"dialog")
+
+
+
+
                 }
 
             })

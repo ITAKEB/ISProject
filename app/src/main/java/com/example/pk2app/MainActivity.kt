@@ -123,4 +123,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         return super.onOptionsItemSelected(item)
     }
+
+    override fun onBackPressed() {
+
+    }
 }
