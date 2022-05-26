@@ -1,6 +1,7 @@
 package com.example.pk2app
 
 import Data.DataDbHelper
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pk2app.ui.AccountsPayedAdapter
 import com.example.pk2app.ui.ItemsAdapter
 import com.example.pk2app.ui.PopUpAddItem
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -92,6 +94,19 @@ class Items : Fragment() {
                     Toast.makeText(activity, "You clicked on item no. $i", Toast.LENGTH_SHORT)
                         .show()
                 }
+            })
+
+            adapter.setOnBtDeleteClickListener(object : ItemsAdapter.onBtClickLister {
+                override fun onBtClick(id: Int) {
+                    Toast.makeText(activity, "You delete item no. ${id}", Toast.LENGTH_SHORT)
+                        .show()
+                    db.deleteItem(id)
+
+                val newActivity = Intent(activity, AItems::class.java)
+
+                startActivity(newActivity)
+                }
+
             })
 
         }

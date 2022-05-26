@@ -46,6 +46,7 @@ class AccountView: AppCompatActivity() {
                 onSubmitClickListener = {itemBoard ->
                     Toast.makeText(this, "Usted ingreso: ${itemBoard.getItemTitle()}", Toast.LENGTH_SHORT).show()
                     db.insertItemBoard(id,itemBoard.getItemTitle(), itemBoard.getItemTotal(),itemBoard.getItemPrice(),itemBoard.getQuantity())
+//                    db.close()
 
                     updateRecyclerView(recyclerView)
 
@@ -63,7 +64,14 @@ class AccountView: AppCompatActivity() {
 
                     Toast.makeText(this,"Hola ${board.getId()}",Toast.LENGTH_SHORT).show()
                     db.insertPayedBoard(board.getId(),board.getBoard(),board.getCustomer(),board.getTotalPrice())
+
                     //Aquí se debería eliminar la cuenta de Accounts (home)
+                    db.deleteBoard(id)
+
+                    val newActivity = Intent(this, MainActivity::class.java)
+                    startActivity(newActivity)
+
+
 
                 }
             ).show(supportFragmentManager, "dialog")

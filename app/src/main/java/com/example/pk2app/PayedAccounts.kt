@@ -62,11 +62,13 @@ class PayedAccounts : Fragment() {
         btDelete?.setOnClickListener {
                 PopUpAreUSure(
                     onSubmitClickListener = {
-                        Toast.makeText(activity, "Usted pagó: ", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, "Usted borró: ", Toast.LENGTH_SHORT).show()
 
                     }
                 ).show(parentFragmentManager,"dialog")
             }
+
+
 
         }
 
@@ -88,10 +90,24 @@ class PayedAccounts : Fragment() {
                 override fun onItemClick(id: Int) {
                     Toast.makeText(activity, "You clicked on item no. ${id}", Toast.LENGTH_SHORT)
                         .show()
-//                    val newActivity = Intent(activity, AccountView::class.java)
-//                    newActivity.putExtra("boardId", id)
-//                    startActivity(newActivity)
+                    val newActivity = Intent(activity, AccountView::class.java)
+                    newActivity.putExtra("boardId", id)
+                    startActivity(newActivity)
                 }
+
+            })
+
+            adapter.setOnBtDeleteClickListener(object : AccountsPayedAdapter.onBtClickLister {
+                override fun onBtClick(id: Int) {
+                    Toast.makeText(activity, "You delete item no. ${id}", Toast.LENGTH_SHORT)
+                        .show()
+                    db.deletePayedBoard(id)
+
+                    val newActivity = Intent(activity, AaccountsPayed::class.java)
+
+                    startActivity(newActivity)
+                }
+
             })
 
         }

@@ -161,11 +161,23 @@ class DataDbHelper(context: Context?) :
         }
 
         return Tables.Boards.actualBoard
+    }
 
+    fun deleteBoard(id: Int)  {
+        Tables.Boards.actualBoard.clear()
+
+        val c = db.rawQuery(
+            "DELETE FROM " + Tables.Boards.TABLE_NAME + " WHERE id = ?",
+            arrayOf(id.toString())
+        )
+        c.moveToFirst()
+
+        getBoardData()
 
     }
 
     fun insertPayedBoard(id: Int, board: String, customer: String, total: String) {
+        values.clear()
         values.put(Tables.PayedBoards.ID, id)
         values.put(Tables.PayedBoards.COLUMN_BOARD, board)
         values.put(Tables.PayedBoards.COLUMN_CUSTOMER, customer)
@@ -201,6 +213,19 @@ class DataDbHelper(context: Context?) :
 
     }
 
+    fun deletePayedBoard(id: Int)  {
+        Tables.PayedBoards.actualBoard.clear()
+
+        val c = db.rawQuery(
+            "DELETE FROM " + Tables.PayedBoards.TABLE_NAME + " WHERE id = ?",
+            arrayOf(id.toString())
+        )
+        c.moveToFirst()
+
+        getBoardData()
+
+    }
+
     fun insertItemBoard(
         boardId: Int,
         itemTitle: String,
@@ -208,6 +233,7 @@ class DataDbHelper(context: Context?) :
         itemPrice: Long,
         quantity: Int
     ) {
+        values.clear()
         values.put(Tables.ItemsBoard.COLUMN_BOARDID, boardId)
         values.put(Tables.ItemsBoard.COLUMN_ITEM_TITLE, itemTitle)
         values.put(Tables.ItemsBoard.COLUMN_ITEM_TOTAL, itemTotal)
@@ -239,6 +265,19 @@ class DataDbHelper(context: Context?) :
         }
 
         return Tables.ItemsBoard.itemsBoard
+
+    }
+
+    fun deleteItem(id: Int)  {
+        Tables.Items.actualItem.clear()
+
+        val c = db.rawQuery(
+            "DELETE FROM " + Tables.Items.TABLE_NAME + " WHERE id = ?",
+            arrayOf(id.toString())
+        )
+        c.moveToFirst()
+
+        getItemData()
 
     }
 

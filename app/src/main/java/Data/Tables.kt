@@ -14,6 +14,7 @@ class Tables
             val COLUMN_PRICE = "price"
             val COLUMN_DESCRIPTION = "description"
             val items: MutableList<Item> = ArrayList()
+            val actualItem: MutableList<Item> = ArrayList()
         }
     }
 
@@ -37,6 +38,7 @@ class Tables
             val COLUMN_CUSTOMER = "customer"
             val COLUMN_TOTAL = "totalPrice"
             val boards: MutableList<Board> = ArrayList()
+            val actualBoard: MutableList<Board> = ArrayList()
         }
     }
 
