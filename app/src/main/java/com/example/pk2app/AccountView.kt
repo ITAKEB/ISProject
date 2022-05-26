@@ -4,6 +4,7 @@ import Data.DataDbHelper
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -32,23 +33,24 @@ class AccountView: AppCompatActivity() {
         db = DataDbHelper(this)
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerViewItemsAccount)
+        val totalAccount = findViewById<TextView>(R.id.totalAccount)
+
         val dataItemBoards = db.getItemsBoardData(id)
 
-        adapter = ItemsAccountAdapter(dataItemBoards)
+        adapter = ItemsAccountAdapter(dataItemBoards, db, totalAccount)
 
-        updateRecyclerView(recyclerView)
-
+        updateRecyclerView(recyclerView,totalAccount)
 
         val btAddItem = findViewById<FloatingActionButton>(R.id.btaddItemTable)
 
         btAddItem.setOnClickListener {
             PopUpAddItemCustomer(
                 onSubmitClickListener = {itemBoard ->
-                    Toast.makeText(this, "Usted ingreso: ${itemBoard.getItemTitle()}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Usted ingreso: ${itemBoard.getItemTitle()},id: ${id}", Toast.LENGTH_SHORT).show()
                     db.insertItemBoard(id,itemBoard.getItemTitle(), itemBoard.getItemTotal(),itemBoard.getItemPrice(),itemBoard.getQuantity())
 //                    db.close()
 
-                    updateRecyclerView(recyclerView)
+                    updateRecyclerView(recyclerView,totalAccount)
 
                     adapter.notifyDataSetChanged()
                 }
@@ -78,11 +80,17 @@ class AccountView: AppCompatActivity() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        db.updateTotalPriceBoard(id,adapter.getTotalPrice())
 
-    private fun updateRecyclerView(recyclerView: RecyclerView) {
+    }
+
+
+    private fun updateRecyclerView(recyclerView: RecyclerView, totalAccount: TextView) {
         val dataItemBoards = db.getItemsBoardData(id)
 
-        adapter = ItemsAccountAdapter(dataItemBoards)
+        adapter = ItemsAccountAdapter(dataItemBoards,db, totalAccount)
         recyclerView.layoutManager = GridLayoutManager(this, 1)
         recyclerView.adapter = adapter
     }

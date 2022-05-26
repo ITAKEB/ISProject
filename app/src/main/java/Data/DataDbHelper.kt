@@ -70,6 +70,7 @@ class DataDbHelper(context: Context?) :
     }
 
     fun insertItem(name: String, price: String, description: String) {
+        values.clear()
         values.put(Tables.Items.COLUMN_NAME, name)
         values.put(Tables.Items.COLUMN_PRICE, price)
         values.put(Tables.Items.COLUMN_DESCRIPTION, description)
@@ -78,6 +79,7 @@ class DataDbHelper(context: Context?) :
 
 
     fun getItemData(): MutableList<Item> {
+        values.clear()
         Tables.Items.items.clear()
         val columnas = arrayOf(
             Tables.Items.ID,
@@ -106,6 +108,7 @@ class DataDbHelper(context: Context?) :
     }
 
     fun insertBoard(board: String, customer: String, total: String) {
+        values.clear()
         values.put(Tables.Boards.COLUMN_BOARD, board)
         values.put(Tables.Boards.COLUMN_CUSTOMER, customer)
         values.put(Tables.Boards.COLUMN_TOTAL, total)
@@ -113,6 +116,7 @@ class DataDbHelper(context: Context?) :
     }
 
     fun getBoardData(): MutableList<Board> {
+        values.clear()
         Tables.Boards.boards.clear()
         val columnas = arrayOf(
             Tables.Boards.ID,
@@ -141,6 +145,7 @@ class DataDbHelper(context: Context?) :
     }
 
     fun getBoard(id: Int): MutableList<Board>  {
+        values.clear()
         Tables.Boards.actualBoard.clear()
 
         val c = db.rawQuery(
@@ -164,6 +169,7 @@ class DataDbHelper(context: Context?) :
     }
 
     fun deleteBoard(id: Int)  {
+        values.clear()
         Tables.Boards.actualBoard.clear()
 
         val c = db.rawQuery(
@@ -186,6 +192,7 @@ class DataDbHelper(context: Context?) :
     }
 
     fun getPayedBoardData(): MutableList<Board> {
+        values.clear()
         Tables.PayedBoards.boards.clear()
         val columnas = arrayOf(
             Tables.PayedBoards.ID,
@@ -214,6 +221,7 @@ class DataDbHelper(context: Context?) :
     }
 
     fun deletePayedBoard(id: Int)  {
+        values.clear()
         Tables.PayedBoards.actualBoard.clear()
 
         val c = db.rawQuery(
@@ -243,12 +251,14 @@ class DataDbHelper(context: Context?) :
     }
 
     fun getItemsBoardData(id:Int): MutableList<ItemBoard> {
+        values.clear()
         Tables.ItemsBoard.itemsBoard.clear()
 
         val c = db.rawQuery(
             "SELECT * FROM " + Tables.ItemsBoard.TABLE_NAME + " WHERE board_id = ?",
             arrayOf(id.toString())
         )
+
         if (c.moveToFirst()) {
             do {
                 Tables.ItemsBoard.itemsBoard.add(
@@ -269,6 +279,7 @@ class DataDbHelper(context: Context?) :
     }
 
     fun deleteItem(id: Int)  {
+        values.clear()
         Tables.Items.actualItem.clear()
 
         val c = db.rawQuery(
@@ -281,5 +292,26 @@ class DataDbHelper(context: Context?) :
 
     }
 
+    fun updateQuantityItemBoard(id:Int, quantity: Int, total: Int){
+        values.clear()
+        Tables.ItemsBoard.actualItemBoard.clear()
+
+        val c = db.rawQuery(
+            "UPDATE " + Tables.ItemsBoard.TABLE_NAME +" SET quantity = ?, item_total = ?" + " WHERE id = ?",
+            arrayOf(quantity.toString(), total.toString() ,id.toString())
+        )
+        c.moveToFirst()
+    }
+
+    fun updateTotalPriceBoard(id:Int,total: Int){
+        values.clear()
+        Tables.Boards.actualBoard.clear()
+
+        val c = db.rawQuery(
+            "UPDATE " + Tables.Boards.TABLE_NAME +" SET totalPrice = ?" + " WHERE id = ?",
+            arrayOf(total.toString() ,id.toString())
+        )
+        c.moveToFirst()
+    }
 
 }

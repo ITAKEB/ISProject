@@ -27,11 +27,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/recyclerViewItemsAccount"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_margin="10dp"
-            android:textStyle="bold"
-            android:text="Total : $10000" />
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Total : $0"
+            android:textStyle="bold" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btPay"

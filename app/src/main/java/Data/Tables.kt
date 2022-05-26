@@ -52,6 +52,7 @@ class Tables
             val COLUMN_ITEM_PRICE = "item_price"
             val COLUMN_QUANTITY = "quantity"
             val itemsBoard: MutableList<ItemBoard> = ArrayList()
+            val actualItemBoard: MutableList<ItemBoard> = ArrayList()
         }
     }
 }
