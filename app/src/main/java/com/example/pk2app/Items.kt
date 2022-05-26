@@ -102,9 +102,9 @@ class Items : Fragment() {
                         .show()
                     db.deleteItem(id)
 
-                val newActivity = Intent(activity, AItems::class.java)
-
-                startActivity(newActivity)
+//                val newActivity = Intent(activity, AItems::class.java)
+//
+//                startActivity(newActivity)
                 }
 
             })

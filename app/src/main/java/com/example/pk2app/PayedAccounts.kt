@@ -92,6 +92,7 @@ class PayedAccounts : Fragment() {
                         .show()
                     val newActivity = Intent(activity, AccountView::class.java)
                     newActivity.putExtra("boardId", id)
+                    newActivity.putExtra("payedAccount",1)
                     startActivity(newActivity)
                 }
 
@@ -103,9 +104,9 @@ class PayedAccounts : Fragment() {
                         .show()
                     db.deletePayedBoard(id)
 
-                    val newActivity = Intent(activity, AaccountsPayed::class.java)
-
-                    startActivity(newActivity)
+//                    val newActivity = Intent(activity, AaccountsPayed::class.java)
+//
+//                    startActivity(newActivity)
                 }
 
             })

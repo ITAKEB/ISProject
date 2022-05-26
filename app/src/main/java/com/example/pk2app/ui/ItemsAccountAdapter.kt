@@ -11,12 +11,13 @@ import com.example.pk2app.ItemBoard
 import com.example.pk2app.R
 import com.google.android.material.button.MaterialButton
 
-class ItemsAccountAdapter(dataItemBoard: MutableList<ItemBoard>, db:DataDbHelper, totalAccount:TextView): RecyclerView.Adapter<ItemsAccountAdapter.ViewHolder>() {
+class ItemsAccountAdapter(dataItemBoard: MutableList<ItemBoard>, db:DataDbHelper, totalAccount:TextView, bool:Int): RecyclerView.Adapter<ItemsAccountAdapter.ViewHolder>() {
 
-    val itemsBoards =  dataItemBoard
-    val db = db
+    private val itemsBoards =  dataItemBoard
+    private val db = db
     private var totalPrice:Int = 0
-    val totalAccount:TextView = totalAccount
+    private val totalAccount:TextView = totalAccount
+    private val bool:Int = bool
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
         val v =
@@ -27,9 +28,9 @@ class ItemsAccountAdapter(dataItemBoard: MutableList<ItemBoard>, db:DataDbHelper
     override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) {
         viewHolder.itemAccountTitle.text = itemsBoards[i].getItemTitle()
         viewHolder.itemAccountCount.text = itemsBoards[i].getQuantity().toString()
-        viewHolder.itemAccountPrice.text = "$"+(itemsBoards[i].getItemPrice().toInt()*itemsBoards[i].getQuantity())
-        totalPrice = itemsBoards[i].getItemTotal().toInt() + totalPrice
-        totalAccount.setText(totalPrice.toString())
+        viewHolder.itemAccountPrice.text = "$ "+(itemsBoards[i].getItemPrice().toInt()*itemsBoards[i].getQuantity())
+        totalPrice = itemsBoards[i].getItemPrice().toInt()*itemsBoards[i].getQuantity() + totalPrice
+        totalAccount.setText("$ "+totalPrice)
 
     }
 
@@ -43,14 +44,24 @@ class ItemsAccountAdapter(dataItemBoard: MutableList<ItemBoard>, db:DataDbHelper
         var itemAccountPrice: TextView
         var addLess: MaterialButton
         var addMore: MaterialButton
-
+        var info:MaterialButton
+        var delete:MaterialButton
         init{
             itemAccountTitle = itemView.findViewById(R.id.itemAccountTitle)
             itemAccountCount = itemView.findViewById(R.id.itemAccountCount)
             itemAccountPrice = itemView.findViewById(R.id.itemAccountPrice)
             addLess = itemView.findViewById(R.id.btAddLess)
             addMore = itemView.findViewById(R.id.btAddMore)
+            info = itemView.findViewById(R.id.btInfo)
+            delete = itemView.findViewById(R.id.btDelete)
 
+
+            if(bool==1){
+                addLess.visibility = View.GONE
+                addMore.visibility = View.GONE
+                delete.visibility = View.GONE
+                info.visibility=View.GONE
+            }
 
             addMore.setOnClickListener {
                 val count = itemAccountCount.text.toString().toInt() + 1
@@ -58,8 +69,8 @@ class ItemsAccountAdapter(dataItemBoard: MutableList<ItemBoard>, db:DataDbHelper
                 totalPrice += itemsBoards[position].getItemPrice().toInt()
                 db.updateQuantityItemBoard(itemsBoards[position].getId(),count, price)
                 itemAccountCount.setText(count.toString())
-                itemAccountPrice.setText("$"+price.toString())
-                totalAccount.setText(totalPrice.toString())
+                itemAccountPrice.setText("$ "+price.toString())
+                totalAccount.setText("$ "+totalPrice.toString())
             }
 
             addLess.setOnClickListener {
@@ -68,11 +79,11 @@ class ItemsAccountAdapter(dataItemBoard: MutableList<ItemBoard>, db:DataDbHelper
                 totalPrice -= itemsBoards[position].getItemPrice().toInt()
                 db.updateQuantityItemBoard(itemsBoards[position].getId(),count,price)
                 itemAccountCount.setText(count.toString())
-                itemAccountPrice.setText("$"+price.toString())
-                totalAccount.setText(totalPrice.toString())
+                itemAccountPrice.setText("$ "+price.toString())
+                totalAccount.setText("$ "+totalPrice.toString())
             }
 
-            totalAccount.setText(totalPrice.toString())
+            totalAccount.setText("$ "+totalPrice.toString())
 
         }
     }

@@ -55,6 +55,7 @@ class Home : Fragment() {
 
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
+
         recyclerView = view?.findViewById(R.id.recyclerViewAccounts)
         db = DataDbHelper(context)
 
@@ -95,6 +96,7 @@ class Home : Fragment() {
                         .show()
                     val newActivity = Intent(activity, AccountView::class.java)
                     newActivity.putExtra("boardId",id)
+                    newActivity.putExtra("payedAccount",0)
                     startActivity(newActivity)
                 }
             })

@@ -74,28 +74,32 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //                val newActivity = Intent(this, MainActivity::class.java)
 //                startActivity(newActivity)
 //                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                supportFragmentManager.beginTransaction().replace(R.id.flContent, Home()).commit()
 
             }
             R.id.navItems -> {
                 Toast.makeText(this, "Items", Toast.LENGTH_SHORT).show()
 //                supportFragmentManager.beginTransaction().replace(R.id.flContent, Items()).commit()
-                val newActivity = Intent(this, AItems::class.java)
-                startActivity(newActivity)
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+//                val newActivity = Intent(this, AItems::class.java)
+//                startActivity(newActivity)
+//                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                supportFragmentManager.beginTransaction().replace(R.id.flContent, Items()).commit()
             }
             R.id.navDelete -> {
                 Toast.makeText(this, "Delete", Toast.LENGTH_SHORT).show()
 //                supportFragmentManager.beginTransaction().replace(R.id.flContent, Delete()).commit()
-                val newActivity = Intent(this, Adelete::class.java)
-                startActivity(newActivity)
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+//                val newActivity = Intent(this, Adelete::class.java)
+//                startActivity(newActivity)
+//                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                supportFragmentManager.beginTransaction().replace(R.id.flContent, Delete()).commit()
             }
             R.id.navPayments -> {
                 Toast.makeText(this, "Payed Accounts", Toast.LENGTH_SHORT).show()
 //                supportFragmentManager.beginTransaction().replace(R.id.flContent, PayedAccounts()).commit()
-                val newActivity = Intent(this, AaccountsPayed::class.java)
-                startActivity(newActivity)
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+//                val newActivity = Intent(this, AaccountsPayed::class.java)
+//                startActivity(newActivity)
+//                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                supportFragmentManager.beginTransaction().replace(R.id.flContent, PayedAccounts()).commit()
             }
         }
         drawer.closeDrawer(GravityCompat.START, false)

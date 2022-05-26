@@ -20,13 +20,12 @@
         android:id="@+id/editTextTextPersonName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginEnd="72dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:minHeight="48dp"
-        android:text="Name"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:minHeight="48dp" />
 
     <TextView
         android:id="@+id/textView"
