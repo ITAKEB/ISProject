@@ -18,11 +18,11 @@ import com.google.android.material.textfield.TextInputLayout
 
 class PopUpAddItemCustomer(
     private val onSubmitClickListener: (ItemBoard) -> Unit,
-    private val items:MutableList<Item>
+    private val items: MutableList<Item>
 
 ) : DialogFragment(), AdapterView.OnItemClickListener {
 
-    private var itemPrice:TextInputLayout? = null
+    private var itemPrice: TextInputLayout? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val inflater = this.layoutInflater
@@ -47,16 +47,9 @@ class PopUpAddItemCustomer(
 
         with(autoComplete) {
             setAdapter(dropdownAdapter)
-
             onItemClickListener = this@PopUpAddItemCustomer
 
-
-
-
         }
-
-
-
 
         btAdd.setOnClickListener {
             onSubmitClickListener.invoke(

@@ -57,7 +57,7 @@ class Items : Fragment() {
         recyclerView = view?.findViewById(R.id.recyclerViewItems)
         db = DataDbHelper(context)
 
-        updateRecyclerView(recyclerView,this)
+        updateRecyclerView(recyclerView, this)
 
 
         val btAddNewItem = view?.findViewById<FloatingActionButton>(R.id.btaddItem)
@@ -65,22 +65,23 @@ class Items : Fragment() {
         btAddNewItem?.setOnClickListener {
             PopUpAddItem(
                 onSubmitClickListener = { item ->
-                    Toast.makeText(activity, "Usted ingreso: ${item.getName()}", Toast.LENGTH_SHORT).show()
-                    db.insertItem(item.getName(),item.getPrice(),item.getDescription())
+                    Toast.makeText(activity, "Usted ingreso: ${item.getName()}", Toast.LENGTH_SHORT)
+                        .show()
+                    db.insertItem(item.getName(), item.getPrice(), item.getDescription())
                     //Refresh new data on this fragment
 
-                    updateRecyclerView(recyclerView,this)
+                    updateRecyclerView(recyclerView, this)
 
                     adapter.notifyDataSetChanged()
 
-                }
-            ).show(parentFragmentManager,"dialog")
+                },null
+            ).show(parentFragmentManager, "dialog")
         }
 
 
     }
 
-    private fun updateRecyclerView(recyclerView: RecyclerView?, fr:Fragment) {
+    private fun updateRecyclerView(recyclerView: RecyclerView?, fr: Fragment) {
         val dataItems = db.getItemData()
 
         recyclerView.apply {
@@ -92,9 +93,22 @@ class Items : Fragment() {
             recyclerView?.adapter = adapter
 
             adapter.setOnItemClickListener(object : ItemsAdapter.onItemClickLister {
-                override fun onItemClick(i: Int) {
-                    Toast.makeText(activity, "You clicked on item no. $i", Toast.LENGTH_SHORT)
+                override fun onItemClick(id: Int) {
+                    Toast.makeText(activity, "You clicked on item no. $id", Toast.LENGTH_SHORT)
                         .show()
+                    PopUpAddItem(
+                        onSubmitClickListener = { item ->
+                            Toast.makeText(activity, "Usted ingreso: ${item.getName()}", Toast.LENGTH_SHORT)
+                                .show()
+                            db.insertItem(item.getName(), item.getPrice(), item.getDescription())
+                            //Refresh new data on this fragment
+
+                            updateRecyclerView(recyclerView, fr)
+
+                            adapter.notifyDataSetChanged()
+
+                        },db.getItem(id)[0]
+                    ).show(parentFragmentManager, "dialog")
                 }
             })
 
@@ -102,17 +116,20 @@ class Items : Fragment() {
                 override fun onBtClick(id: Int) {
 
 
-
-                PopUpAreUSure(
-                    onSubmitClickListener = {
-                        db.deleteItem(id)
-                        Toast.makeText(activity, "You delete item no. ${id}", Toast.LENGTH_SHORT)
-                            .show()
-                        val fragmentManager: FragmentManager = parentFragmentManager
-                        fragmentManager.beginTransaction().detach(fr).commit()
-                        fragmentManager.beginTransaction().attach(fr).commit()
-                    }
-                ).show(parentFragmentManager,"dialog")
+                    PopUpAreUSure(
+                        onSubmitClickListener = {
+                            db.deleteItem(id)
+                            Toast.makeText(
+                                activity,
+                                "You delete item no. ${id}",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                            val fragmentManager: FragmentManager = parentFragmentManager
+                            fragmentManager.beginTransaction().detach(fr).commit()
+                            fragmentManager.beginTransaction().attach(fr).commit()
+                        }
+                    ).show(parentFragmentManager, "dialog")
 
                 }
 
@@ -121,7 +138,6 @@ class Items : Fragment() {
         }
 
     }
-
 
 
     companion object {

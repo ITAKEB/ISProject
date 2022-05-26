@@ -14,7 +14,8 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
 
 class PopUpAddItem(
-    private val onSubmitClickListener: (Item) -> Unit
+    private val onSubmitClickListener: (Item) -> Unit,
+    private val item:Item?
 
 ) : DialogFragment() {
 
@@ -33,6 +34,12 @@ class PopUpAddItem(
         val description = dialogView.findViewById<TextInputLayout>(R.id.txtInfo)
 
 
+        if(item != null){
+            name.editText?.setText(item.getName())
+            description.editText?.setText(item.getDescription())
+            price.editText?.setText(item.getPrice())
+        }
+
 
         btAdd.setOnClickListener {
             onSubmitClickListener.invoke(
@@ -45,6 +52,7 @@ class PopUpAddItem(
             )
             dismiss()
         }
+
 
         btClose.setOnClickListener {
             dismiss()

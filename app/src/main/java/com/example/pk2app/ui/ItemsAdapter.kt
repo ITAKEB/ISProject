@@ -67,7 +67,7 @@ class ItemsAdapter ( items: MutableList<Item>) : RecyclerView.Adapter<ItemsAdapt
             }
 
             itemView.setOnClickListener {
-                listener.onItemClick(adapterPosition)
+                listener.onItemClick(items[adapterPosition].getId())
             }
         }
     }

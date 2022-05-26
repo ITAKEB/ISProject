@@ -107,6 +107,30 @@ class DataDbHelper(context: Context?) :
 
     }
 
+    fun getItem(id: Int): MutableList<Item>  {
+        values.clear()
+        Tables.Items.actualItem.clear()
+
+        val c = db.rawQuery(
+            "SELECT * FROM " + Tables.Items.TABLE_NAME + " WHERE id = ? LIMIT 1",
+            arrayOf(id.toString())
+        )
+        if (c.moveToFirst()) {
+            do {
+                Tables.Items.actualItem.add(
+                    Item(
+                        c.getInt(0),
+                        c.getString(1),
+                        c.getString(2),
+                        c.getString(3)
+                    )
+                )
+            } while (c.moveToNext())
+        }
+
+        return Tables.Items.actualItem
+    }
+
     fun insertBoard(board: String, customer: String, total: String) {
         values.clear()
         values.put(Tables.Boards.COLUMN_BOARD, board)

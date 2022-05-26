@@ -65,7 +65,7 @@ class AccountView (): AppCompatActivity() {
                     db.updateTotalPriceBoard(id,adapter.getTotalPrice())
                     val board:Board = db.getBoard(id)[0]
 
-                    Toast.makeText(this,"Hola ${board.getId()}",Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this,"Hola ${board.getId()}",Toast.LENGTH_SHORT).show()
                     db.insertPayedBoard(board.getId(),board.getBoard(),board.getCustomer(),board.getTotalPrice())
 
                     //Aquí se debería eliminar la cuenta de Accounts (home)
