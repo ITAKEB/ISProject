@@ -52,7 +52,8 @@ class AccountView (): AppCompatActivity() {
                     updateRecyclerView(recyclerView,totalAccount)
 
                     adapter.notifyDataSetChanged()
-                }
+                },
+                db.getItemData()
             ).show(supportFragmentManager, "dialog")
         }
 

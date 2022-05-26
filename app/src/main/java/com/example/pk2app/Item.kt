@@ -29,5 +29,9 @@ class Item{
         return description
     }
 
+    override fun toString(): String {
+        return name
+    }
+
 
 }
