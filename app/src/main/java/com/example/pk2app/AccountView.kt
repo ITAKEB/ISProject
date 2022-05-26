@@ -4,16 +4,12 @@ import Data.DataDbHelper
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.transition.Transition
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pk2app.ui.AccountsAdapter
-import com.example.pk2app.ui.ItemsAccountAdapter
-import com.example.pk2app.ui.PopUpAddItemCustomer
-import com.example.pk2app.ui.PopUpAreUSure
+import com.example.pk2app.ui.*
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -65,6 +61,7 @@ class AccountView (): AppCompatActivity() {
         btPay.setOnClickListener {
             PopUpAreUSure(
                 onSubmitClickListener = {
+                    db.updateTotalPriceBoard(id,adapter.getTotalPrice())
                     val board:Board = db.getBoard(id)[0]
 
                     Toast.makeText(this,"Hola ${board.getId()}",Toast.LENGTH_SHORT).show()
@@ -75,8 +72,6 @@ class AccountView (): AppCompatActivity() {
 
                     val newActivity = Intent(this, MainActivity::class.java)
                     startActivity(newActivity)
-
-
 
                 }
             ).show(supportFragmentManager, "dialog")
@@ -94,8 +89,25 @@ class AccountView (): AppCompatActivity() {
 
         adapter = ItemsAccountAdapter(dataItemBoards,db, totalAccount,bool)
         recyclerView.layoutManager = GridLayoutManager(this, 1)
+        adapter.setOnBtDeleteClickListener(object : ItemsAccountAdapter.onBtClickLister {
+            override fun onBtClick(id: Int) {
+                Toast.makeText(this@AccountView, "You clicked on item no. $id", Toast.LENGTH_SHORT).show()
+            }
+        })
         recyclerView.adapter = adapter
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        db.updateTotalPriceBoard(id,adapter.getTotalPrice())
+    }
+
+    override fun onResume() {
+        super.onResume()
+        db.updateTotalPriceBoard(id,adapter.getTotalPrice())
+    }
+
+
 
     // don't forget click listener for back button
     override fun onSupportNavigateUp(): Boolean {

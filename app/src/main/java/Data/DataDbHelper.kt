@@ -278,6 +278,18 @@ class DataDbHelper(context: Context?) :
 
     }
 
+    fun deleteItemBoard(id: Int)  {
+        values.clear()
+        Tables.ItemsBoard.actualItemBoard.clear()
+
+        val c = db.rawQuery(
+            "DELETE FROM " + Tables.ItemsBoard.TABLE_NAME + " WHERE id = ?",
+            arrayOf(id.toString())
+        )
+        c.moveToFirst()
+
+    }
+
     fun deleteItem(id: Int)  {
         values.clear()
         Tables.Items.actualItem.clear()

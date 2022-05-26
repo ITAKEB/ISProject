@@ -5,6 +5,8 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import androidx.fragment.app.DialogFragment
 import com.example.pk2app.Board
 import com.example.pk2app.R
@@ -14,7 +16,7 @@ import com.google.android.material.textfield.TextInputLayout
 class PopUpAddCustomer(
     private val onSubmitClickListener: (Board) -> Unit
 
-) :DialogFragment() {
+) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val inflater = this.layoutInflater
@@ -28,9 +30,37 @@ class PopUpAddCustomer(
         val btCancel = dialogView.findViewById<MaterialButton>(R.id.btCancelar)
         val board = dialogView.findViewById<TextInputLayout>(R.id.txtMesa)
         val customer = dialogView.findViewById<TextInputLayout>(R.id.txtCliente)
+        val autoComplete = dialogView.findViewById<AutoCompleteTextView>(R.id.autoTextView)
+        val dropdownAdapter = ArrayAdapter(
+            requireActivity(),
+            R.layout.list_item,
+            arrayOf(
+                "Mesa 1",
+                "Mesa 2",
+                "Mesa 3",
+                "Mesa 4",
+                "Mesa 5",
+                "Mesa 6",
+                "Mesa 7",
+                "Mesa 8",
+                "Mesa 9",
+                "Sin Mesa"
+            )
+        )
+
+        with(autoComplete) {
+            setAdapter(dropdownAdapter)
+        }
 
         btAdd.setOnClickListener {
-            onSubmitClickListener.invoke(Board(0,board.editText?.text.toString(),customer.editText?.text.toString(),"0"))
+            onSubmitClickListener.invoke(
+                Board(
+                    0,
+                    board.editText?.text.toString(),
+                    customer.editText?.text.toString(),
+                    "0"
+                )
+            )
             dismiss()
         }
 

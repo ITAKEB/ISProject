@@ -19,10 +19,22 @@ class ItemsAccountAdapter(dataItemBoard: MutableList<ItemBoard>, db:DataDbHelper
     private val totalAccount:TextView = totalAccount
     private val bool:Int = bool
 
+    private lateinit var mBtListener : onBtClickLister
+
+    interface onBtClickLister{
+
+        fun onBtClick(id: Int)
+
+    }
+
+    fun setOnBtDeleteClickListener(btlistener: onBtClickLister){
+        mBtListener = btlistener
+    }
+
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
         val v =
             LayoutInflater.from(viewGroup.context).inflate(R.layout.card_item_account, viewGroup, false)
-        return ViewHolder(v)
+        return ViewHolder(v, mBtListener)
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) {
@@ -38,7 +50,7 @@ class ItemsAccountAdapter(dataItemBoard: MutableList<ItemBoard>, db:DataDbHelper
         return itemsBoards.size
     }
 
-    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+    inner class ViewHolder(itemView: View, btlistener:onBtClickLister): RecyclerView.ViewHolder(itemView){
         var itemAccountTitle: TextView
         var itemAccountCount: TextView
         var itemAccountPrice: TextView
@@ -81,6 +93,24 @@ class ItemsAccountAdapter(dataItemBoard: MutableList<ItemBoard>, db:DataDbHelper
                 itemAccountCount.setText(count.toString())
                 itemAccountPrice.setText("$ "+price.toString())
                 totalAccount.setText("$ "+totalPrice.toString())
+            }
+
+            delete.setOnClickListener {
+                val id = itemsBoards[position].getId()
+                val count = itemAccountCount.text.toString().toInt()
+                val price = itemsBoards[adapterPosition].getItemPrice().toInt() * count
+                itemsBoards.removeAt(position)
+                db.deleteItemBoard(id)
+                notifyItemRemoved(position)
+                notifyItemRangeChanged(position,itemsBoards.size)
+
+                totalPrice -= price
+                totalAccount.setText("$ "+totalPrice.toString())
+            }
+
+            info.setOnClickListener {
+                //Mejor enviar el itemId
+                btlistener.onBtClick(itemsBoards[adapterPosition].getId())
             }
 
             totalAccount.setText("$ "+totalPrice.toString())
