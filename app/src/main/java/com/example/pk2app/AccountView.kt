@@ -106,8 +106,10 @@ class AccountView (): AppCompatActivity() {
             overridePendingTransition(0, 0);
         }else{
             val newActivity = Intent(this, MainActivity::class.java)
+            newActivity.putExtra("key",1)
             startActivity(newActivity)
             overridePendingTransition(0, 0);
+
         }
 
         return true

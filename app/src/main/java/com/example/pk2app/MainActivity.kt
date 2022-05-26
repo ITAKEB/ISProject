@@ -17,6 +17,7 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,13 +29,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private lateinit var drawer: DrawerLayout
     private lateinit var toggle: ActionBarDrawerToggle
+    private var fr:Fragment = Home()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        var key = intent.extras?.get("key")
+        if (key != null){
+            fr = PayedAccounts()
+        }
         //binding = ActivityMainBinding.inflate(layoutInflater)
         //setContentView(binding.root)
-        supportFragmentManager.beginTransaction().replace(R.id.flContent, Home()).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.flContent, fr).commit()
 
 
         var toolbar: androidx.appcompat.widget.Toolbar = findViewById(R.id.toolbarMain)
@@ -75,7 +81,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //                startActivity(newActivity)
 //                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 supportFragmentManager.beginTransaction().replace(R.id.flContent, Home()).commit()
-
+                var fr = Home()
             }
             R.id.navItems -> {
                 Toast.makeText(this, "Items", Toast.LENGTH_SHORT).show()
@@ -84,6 +90,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //                startActivity(newActivity)
 //                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 supportFragmentManager.beginTransaction().replace(R.id.flContent, Items()).commit()
+                var fr = Items()
             }
             R.id.navDelete -> {
                 Toast.makeText(this, "Delete", Toast.LENGTH_SHORT).show()
@@ -92,6 +99,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //                startActivity(newActivity)
 //                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 supportFragmentManager.beginTransaction().replace(R.id.flContent, Delete()).commit()
+                var fr = Delete()
             }
             R.id.navPayments -> {
                 Toast.makeText(this, "Payed Accounts", Toast.LENGTH_SHORT).show()
@@ -100,6 +108,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //                startActivity(newActivity)
 //                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 supportFragmentManager.beginTransaction().replace(R.id.flContent, PayedAccounts()).commit()
+                var fr = PayedAccounts()
             }
         }
         drawer.closeDrawer(GravityCompat.START, false)
