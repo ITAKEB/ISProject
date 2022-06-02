@@ -66,7 +66,7 @@ class Home : Fragment() {
         btAddItem?.setOnClickListener {
             PopUpAddCustomer(
                 onSubmitClickListener = { board ->
-                    Toast.makeText(activity, "Usted ingreso a: ${board.getCustomer()}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, "Usted ingreso al cliente: ${board.getCustomer()}", Toast.LENGTH_SHORT).show()
                     db.insertBoard(board.getBoard(),board.getCustomer(),board.getTotalPrice())
 
                     updateRecyclerView(recyclerView)
@@ -92,8 +92,6 @@ class Home : Fragment() {
 
             adapter.setOnItemClickListener(object : AccountsAdapter.onItemClickLister {
                 override fun onItemClick(id: Int) {
-                    Toast.makeText(activity, "You clicked on item no. ${id}", Toast.LENGTH_SHORT)
-                        .show()
                     val newActivity = Intent(activity, AccountView::class.java)
                     newActivity.putExtra("boardId",id)
                     newActivity.putExtra("payedAccount",0)

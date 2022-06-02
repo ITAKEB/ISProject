@@ -24,6 +24,7 @@ class PopUpAddItemCustomer(
 
     private var itemPrice: TextInputLayout? = null
     private var itemDescripcion: TextInputLayout? = null
+    private var itemQuantity: TextInputLayout? = null
     private var itemId: Int = -1
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -37,7 +38,7 @@ class PopUpAddItemCustomer(
         val btAdd = dialogView.findViewById<MaterialButton>(R.id.btAgregar)
         val btCancel = dialogView.findViewById<MaterialButton>(R.id.btCancelar)
         val itemTitle = dialogView.findViewById<TextInputLayout>(R.id.txtItem)
-        val itemQuantity = dialogView.findViewById<TextInputLayout>(R.id.txtCantidad)
+        itemQuantity = dialogView.findViewById(R.id.txtCantidad)
         itemPrice = dialogView.findViewById(R.id.txtPrecio)
         itemDescripcion = dialogView.findViewById(R.id.txtDescripcion)
         val autoComplete = dialogView.findViewById<AutoCompleteTextView>(R.id.autoTextView)
@@ -63,7 +64,7 @@ class PopUpAddItemCustomer(
                     itemTitle.editText?.text.toString(),
                     itemPrice?.editText?.text.toString().toLong(),
                     itemPrice?.editText?.text.toString().toLong(),
-                    itemQuantity.editText?.text.toString().toInt()
+                    itemQuantity?.editText?.text.toString().toInt()
                 )
             )
             dismiss()
@@ -87,6 +88,7 @@ class PopUpAddItemCustomer(
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         itemPrice?.editText?.setText(items[id.toInt()].getPrice())
         itemDescripcion?.editText?.setText(items[id.toInt()].getDescription())
+        itemQuantity?.editText?.setText("1")
         itemId = items[id.toInt()].getId()
 
     }

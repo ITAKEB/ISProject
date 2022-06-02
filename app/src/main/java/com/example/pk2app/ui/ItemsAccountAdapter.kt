@@ -44,7 +44,7 @@ class ItemsAccountAdapter(dataItemBoard: MutableList<ItemBoard>, db:DataDbHelper
         viewHolder.itemAccountPrice.text = "$ "+(itemsBoards[i].getItemPrice().toInt()*itemsBoards[i].getQuantity())
         totalPrice = itemsBoards[i].getItemPrice().toInt()*itemsBoards[i].getQuantity() + totalPrice
         totalAccount.setText("Total: $"+totalPrice)
-
+        db.updateTotalPriceBoard(itemsBoards[0].getBoardId(),totalPrice)
     }
 
     override fun getItemCount(): Int {
@@ -76,6 +76,11 @@ class ItemsAccountAdapter(dataItemBoard: MutableList<ItemBoard>, db:DataDbHelper
                 info.visibility=View.GONE
             }
 
+            itemView.setOnClickListener {
+                val itemId = itemsBoards[position].getItemId()
+                btlistener.onBtClick(db.getItem(itemId)[0])
+            }
+
             addMore.setOnClickListener {
                 val count = itemAccountCount.text.toString().toInt() + 1
                 val price = itemsBoards[position].getItemPrice().toInt() * count
@@ -84,6 +89,7 @@ class ItemsAccountAdapter(dataItemBoard: MutableList<ItemBoard>, db:DataDbHelper
                 itemAccountCount.setText(count.toString())
                 itemAccountPrice.setText("$${price}")
                 totalAccount.setText("Total: $${totalPrice}")
+                db.updateTotalPriceBoard(itemsBoards[0].getBoardId(),totalPrice)
             }
 
             addLess.setOnClickListener {
@@ -94,6 +100,7 @@ class ItemsAccountAdapter(dataItemBoard: MutableList<ItemBoard>, db:DataDbHelper
                 itemAccountCount.setText(count.toString())
                 itemAccountPrice.setText("$$price")
                 totalAccount.setText("Total: $$totalPrice")
+                db.updateTotalPriceBoard(itemsBoards[0].getBoardId(),totalPrice)
             }
 
             delete.setOnClickListener {
@@ -107,20 +114,16 @@ class ItemsAccountAdapter(dataItemBoard: MutableList<ItemBoard>, db:DataDbHelper
 
                 totalPrice -= price
                 totalAccount.setText("Total: $ $totalPrice")
+                db.updateTotalPriceBoard(itemsBoards[0].getBoardId(),totalPrice)
             }
 
             info.setOnClickListener {
                 val itemId = itemsBoards[position].getItemId()
-                //Mejor enviar el itemId
                 btlistener.onBtClick(db.getItem(itemId)[0])
-//                val itemId = itemsBoards[position].getItemId()
-//                PopUpItemInfo(
-//                    db.getItem(itemId)[0]
-//                ).show(manager, "dialog")
-
             }
 
             totalAccount.setText("Total: $ $totalPrice")
+            db.updateTotalPriceBoard(itemsBoards[0].getBoardId(),totalPrice)
 
         }
     }

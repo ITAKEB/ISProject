@@ -45,7 +45,7 @@ class AccountView (): AppCompatActivity() {
         btAddItem.setOnClickListener {
             PopUpAddItemCustomer(
                 onSubmitClickListener = {itemBoard ->
-                    Toast.makeText(this, "Usted ingreso: ${itemBoard.getItemTitle()},id: ${id}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Usted ingresó: ${itemBoard.getItemTitle()}", Toast.LENGTH_SHORT).show()
                     db.insertItemBoard(id,itemBoard.getItemId(),itemBoard.getItemTitle(), itemBoard.getItemTotal(),itemBoard.getItemPrice(),itemBoard.getQuantity())
 //                    db.close()
 
@@ -95,23 +95,14 @@ class AccountView (): AppCompatActivity() {
         recyclerView.layoutManager = GridLayoutManager(this, 1)
         adapter.setOnBtInfoClickListener(object : ItemsAccountAdapter.onBtClickLister {
             override fun onBtClick(item: Item) {
-                Toast.makeText(this@AccountView, "You clicked on item no. $id", Toast.LENGTH_SHORT).show()
                 PopUpItemInfo(
                     item
                 ).show(supportFragmentManager, "dialog")
             }
         })
+
+
         recyclerView.adapter = adapter
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        db.updateTotalPriceBoard(id,adapter.getTotalPrice())
-    }
-
-    override fun onResume() {
-        super.onResume()
-        db.updateTotalPriceBoard(id,adapter.getTotalPrice())
     }
 
 
