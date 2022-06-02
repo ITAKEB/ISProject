@@ -354,4 +354,15 @@ class DataDbHelper(context: Context?) :
         c.moveToFirst()
     }
 
+    fun updateItem(id:Int,name:String, price: String, description: String ){
+        values.clear()
+        Tables.Items.actualItem.clear()
+
+        val c = db.rawQuery(
+            "UPDATE " + Tables.Items.TABLE_NAME +" SET  name = ?, price = ?, description = ?" + " WHERE id = ?",
+            arrayOf(name, price,description ,id.toString())
+        )
+        c.moveToFirst()
+    }
+
 }

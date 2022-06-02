@@ -11,10 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pk2app.ui.AccountsPayedAdapter
-import com.example.pk2app.ui.ItemsAdapter
-import com.example.pk2app.ui.PopUpAddItem
-import com.example.pk2app.ui.PopUpAreUSure
+import com.example.pk2app.ui.*
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 // TODO: Rename parameter arguments, choose names that match
@@ -94,15 +91,13 @@ class Items : Fragment() {
 
             adapter.setOnItemClickListener(object : ItemsAdapter.onItemClickLister {
                 override fun onItemClick(id: Int) {
-                    Toast.makeText(activity, "You clicked on item no. $id", Toast.LENGTH_SHORT)
-                        .show()
-                    PopUpAddItem(
+                    PopUpUpdateItem(
                         onSubmitClickListener = { item ->
-                            Toast.makeText(activity, "Usted ingreso: ${item.getName()}", Toast.LENGTH_SHORT)
+                            Toast.makeText(activity, "Usted actualizó: ${item.getName()}", Toast.LENGTH_SHORT)
                                 .show()
-                            db.insertItem(item.getName(), item.getPrice(), item.getDescription())
-                            //Refresh new data on this fragment
+                            db.updateItem(id,item.getName(), item.getPrice(), item.getDescription())
 
+                            //Refresh new data on this fragment
                             updateRecyclerView(recyclerView, fr)
 
                             adapter.notifyDataSetChanged()
