@@ -62,6 +62,7 @@ class PopUpAddItemCustomer(
                     0,
                     itemId.toInt(),
                     itemTitle.editText?.text.toString(),
+                    itemDescripcion?.editText?.text.toString(),
                     itemPrice?.editText?.text.toString().toLong(),
                     itemPrice?.editText?.text.toString().toLong(),
                     itemQuantity?.editText?.text.toString().toInt()

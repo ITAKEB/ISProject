@@ -1,5 +1,6 @@
 package Data
 
+import android.content.ClipDescription
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
@@ -50,6 +51,7 @@ class DataDbHelper(context: Context?) :
                     + Tables.ItemsBoard.COLUMN_BOARDID + " INTEGER NOT NULL,"
                     + Tables.ItemsBoard.COLUMN_ITEMID + " INTEGER NOT NULL,"
                     + Tables.ItemsBoard.COLUMN_ITEM_TITLE + " TEXT NOT NULL,"
+                    + Tables.ItemsBoard.COLUMN_ITEM_DESCRIPTION+ " TEXT NULL,"
                     + Tables.ItemsBoard.COLUMN_ITEM_TOTAL + " INTEGER NOT NULL,"
                     + Tables.ItemsBoard.COLUMN_ITEM_PRICE + " INTEGER NOT NULL,"
                     + Tables.ItemsBoard.COLUMN_QUANTITY + " INTEGER NOT NULL)"
@@ -263,6 +265,7 @@ class DataDbHelper(context: Context?) :
         boardId: Int,
         itemId: Int,
         itemTitle: String,
+        itemDescription: String,
         itemTotal: Long,
         itemPrice: Long,
         quantity: Int
@@ -271,6 +274,7 @@ class DataDbHelper(context: Context?) :
         values.put(Tables.ItemsBoard.COLUMN_BOARDID, boardId)
         values.put(Tables.ItemsBoard.COLUMN_ITEMID, itemId)
         values.put(Tables.ItemsBoard.COLUMN_ITEM_TITLE, itemTitle)
+        values.put(Tables.ItemsBoard.COLUMN_ITEM_DESCRIPTION, itemDescription)
         values.put(Tables.ItemsBoard.COLUMN_ITEM_TOTAL, itemTotal)
         values.put(Tables.ItemsBoard.COLUMN_ITEM_PRICE, itemPrice)
         values.put(Tables.ItemsBoard.COLUMN_QUANTITY, quantity)
@@ -294,9 +298,10 @@ class DataDbHelper(context: Context?) :
                         c.getInt(1),
                         c.getInt(2),
                         c.getString(3),
-                        c.getLong(4),
+                        c.getString(4),
                         c.getLong(5),
-                        c.getInt(6)
+                        c.getLong(6),
+                        c.getInt(7)
                     )
                 )
             } while (c.moveToNext())

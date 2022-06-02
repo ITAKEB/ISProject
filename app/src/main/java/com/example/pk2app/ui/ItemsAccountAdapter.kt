@@ -24,7 +24,7 @@ class ItemsAccountAdapter(dataItemBoard: MutableList<ItemBoard>, db:DataDbHelper
 
     interface onBtClickLister{
 
-        fun onBtClick(item: Item)
+        fun onBtClick(itemBoard: ItemBoard)
 
     }
 
@@ -78,7 +78,7 @@ class ItemsAccountAdapter(dataItemBoard: MutableList<ItemBoard>, db:DataDbHelper
 
             itemView.setOnClickListener {
                 val itemId = itemsBoards[position].getItemId()
-                btlistener.onBtClick(db.getItem(itemId)[0])
+                btlistener.onBtClick(itemsBoards[position])
             }
 
             addMore.setOnClickListener {
@@ -107,19 +107,19 @@ class ItemsAccountAdapter(dataItemBoard: MutableList<ItemBoard>, db:DataDbHelper
                 val id = itemsBoards[position].getId()
                 val count = itemAccountCount.text.toString().toInt()
                 val price = itemsBoards[adapterPosition].getItemPrice().toInt() * count
+                totalPrice -= price
+                totalAccount.setText("Total: $ $totalPrice")
+                db.updateTotalPriceBoard(itemsBoards[0].getBoardId(),totalPrice)
+
                 itemsBoards.removeAt(position)
                 db.deleteItemBoard(id)
                 notifyItemRemoved(position)
                 notifyItemRangeChanged(position,itemsBoards.size)
-
-                totalPrice -= price
-                totalAccount.setText("Total: $ $totalPrice")
-                db.updateTotalPriceBoard(itemsBoards[0].getBoardId(),totalPrice)
             }
 
             info.setOnClickListener {
                 val itemId = itemsBoards[position].getItemId()
-                btlistener.onBtClick(db.getItem(itemId)[0])
+                btlistener.onBtClick(itemsBoards[position])
             }
 
             totalAccount.setText("Total: $ $totalPrice")

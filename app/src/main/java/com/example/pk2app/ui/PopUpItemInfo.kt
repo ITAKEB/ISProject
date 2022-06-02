@@ -7,13 +7,14 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import com.example.pk2app.Item
+import com.example.pk2app.ItemBoard
 import com.example.pk2app.R
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
 
 class PopUpItemInfo (
 
-    val item: Item
+    val itemBoard: ItemBoard
 
     ): DialogFragment() {
 
@@ -29,9 +30,9 @@ class PopUpItemInfo (
         val price = dialogView.findViewById<TextInputLayout>(R.id.txtPrecio)
         val btClose = dialogView.findViewById<MaterialButton>(R.id.btClose)
 
-        name.editText?.setText(item.getName())
-        description.editText?.setText(item.getDescription())
-        price.editText?.setText(item.getPrice())
+        name.editText?.setText(itemBoard.getItemTitle())
+        description.editText?.setText(itemBoard.getItemDescription())
+        price.editText?.setText(itemBoard.getItemPrice().toString())
 
         btClose.setOnClickListener {
             dismiss()

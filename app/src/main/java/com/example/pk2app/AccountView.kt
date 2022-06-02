@@ -13,12 +13,12 @@ import com.example.pk2app.ui.*
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class AccountView (): AppCompatActivity() {
+class AccountView() : AppCompatActivity() {
 
     private lateinit var db: DataDbHelper
-    private lateinit var adapter:ItemsAccountAdapter
-    private var id:Int = 0
-    private var bool:Int = 0
+    private lateinit var adapter: ItemsAccountAdapter
+    private var id: Int = 0
+    private var bool: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,20 +36,32 @@ class AccountView (): AppCompatActivity() {
 
         val dataItemBoards = db.getItemsBoardData(id)
 
-        adapter = ItemsAccountAdapter(dataItemBoards, db, totalAccount,bool)
+        adapter = ItemsAccountAdapter(dataItemBoards, db, totalAccount, bool)
 
-        updateRecyclerView(recyclerView,totalAccount)
+        updateRecyclerView(recyclerView, totalAccount)
 
         val btAddItem = findViewById<FloatingActionButton>(R.id.btaddItemTable)
 
         btAddItem.setOnClickListener {
             PopUpAddItemCustomer(
-                onSubmitClickListener = {itemBoard ->
-                    Toast.makeText(this, "Usted ingresó: ${itemBoard.getItemTitle()}", Toast.LENGTH_SHORT).show()
-                    db.insertItemBoard(id,itemBoard.getItemId(),itemBoard.getItemTitle(), itemBoard.getItemTotal(),itemBoard.getItemPrice(),itemBoard.getQuantity())
+                onSubmitClickListener = { itemBoard ->
+                    Toast.makeText(
+                        this,
+                        "Usted ingresó: ${itemBoard.getItemTitle()}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    db.insertItemBoard(
+                        id,
+                        itemBoard.getItemId(),
+                        itemBoard.getItemTitle(),
+                        itemBoard.getItemDescription(),
+                        itemBoard.getItemTotal(),
+                        itemBoard.getItemPrice(),
+                        itemBoard.getQuantity()
+                    )
 //                    db.close()
 
-                    updateRecyclerView(recyclerView,totalAccount)
+                    updateRecyclerView(recyclerView, totalAccount)
 
                     adapter.notifyDataSetChanged()
                 },
@@ -62,15 +74,19 @@ class AccountView (): AppCompatActivity() {
         btPay.setOnClickListener {
             PopUpAreUSure(
                 onSubmitClickListener = {
-                    db.updateTotalPriceBoard(id,adapter.getTotalPrice())
-                    val board:Board = db.getBoard(id)[0]
+                    db.updateTotalPriceBoard(id, adapter.getTotalPrice())
+                    val board: Board = db.getBoard(id)[0]
 
 //                    Toast.makeText(this,"Hola ${board.getId()}",Toast.LENGTH_SHORT).show()
-                    db.insertPayedBoard(board.getId(),board.getBoard(),board.getCustomer(),board.getTotalPrice())
+                    db.insertPayedBoard(
+                        board.getId(),
+                        board.getBoard(),
+                        board.getCustomer(),
+                        board.getTotalPrice()
+                    )
 
                     //Aquí se debería eliminar la cuenta de Accounts (home)
                     db.deleteBoard(id)
-
 
 
                     val newActivity = Intent(this, MainActivity::class.java)
@@ -81,7 +97,7 @@ class AccountView (): AppCompatActivity() {
         }
 
 
-        if(bool==1){
+        if (bool == 1) {
             btPay.visibility = View.INVISIBLE
             btAddItem.visibility = View.INVISIBLE
         }
@@ -91,12 +107,12 @@ class AccountView (): AppCompatActivity() {
     private fun updateRecyclerView(recyclerView: RecyclerView, totalAccount: TextView) {
         val dataItemBoards = db.getItemsBoardData(id)
 
-        adapter = ItemsAccountAdapter(dataItemBoards,db, totalAccount,bool)
+        adapter = ItemsAccountAdapter(dataItemBoards, db, totalAccount, bool)
         recyclerView.layoutManager = GridLayoutManager(this, 1)
         adapter.setOnBtInfoClickListener(object : ItemsAccountAdapter.onBtClickLister {
-            override fun onBtClick(item: Item) {
+            override fun onBtClick(itemBoard: ItemBoard) {
                 PopUpItemInfo(
-                    item
+                    itemBoard
                 ).show(supportFragmentManager, "dialog")
             }
         })
@@ -106,17 +122,16 @@ class AccountView (): AppCompatActivity() {
     }
 
 
-
     // don't forget click listener for back button
     override fun onSupportNavigateUp(): Boolean {
-        db.updateTotalPriceBoard(id,adapter.getTotalPrice())
-        if(bool==0){
+        db.updateTotalPriceBoard(id, adapter.getTotalPrice())
+        if (bool == 0) {
             val newActivity = Intent(this, MainActivity::class.java)
             startActivity(newActivity)
             overridePendingTransition(0, 0);
-        }else{
+        } else {
             val newActivity = Intent(this, MainActivity::class.java)
-            newActivity.putExtra("key",1)
+            newActivity.putExtra("key", 1)
             startActivity(newActivity)
             overridePendingTransition(0, 0);
 

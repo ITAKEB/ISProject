@@ -49,6 +49,7 @@ class Tables
             val COLUMN_BOARDID = "board_id"
             val COLUMN_ITEMID = "item_id"
             val COLUMN_ITEM_TITLE = "item_title"
+            val COLUMN_ITEM_DESCRIPTION = "item_description"
             val COLUMN_ITEM_TOTAL = "item_total"
             val COLUMN_ITEM_PRICE = "item_price"
             val COLUMN_QUANTITY = "quantity"
