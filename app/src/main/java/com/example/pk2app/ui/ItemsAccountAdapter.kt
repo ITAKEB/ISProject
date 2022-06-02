@@ -42,7 +42,7 @@ class ItemsAccountAdapter(dataItemBoard: MutableList<ItemBoard>, db:DataDbHelper
         viewHolder.itemAccountCount.text = itemsBoards[i].getQuantity().toString()
         viewHolder.itemAccountPrice.text = "$ "+(itemsBoards[i].getItemPrice().toInt()*itemsBoards[i].getQuantity())
         totalPrice = itemsBoards[i].getItemPrice().toInt()*itemsBoards[i].getQuantity() + totalPrice
-        totalAccount.setText("$ "+totalPrice)
+        totalAccount.setText("Total: $"+totalPrice)
 
     }
 
@@ -81,8 +81,8 @@ class ItemsAccountAdapter(dataItemBoard: MutableList<ItemBoard>, db:DataDbHelper
                 totalPrice += itemsBoards[position].getItemPrice().toInt()
                 db.updateQuantityItemBoard(itemsBoards[position].getId(),count, price)
                 itemAccountCount.setText(count.toString())
-                itemAccountPrice.setText("$ "+price.toString())
-                totalAccount.setText("$ "+totalPrice.toString())
+                itemAccountPrice.setText("$${price}")
+                totalAccount.setText("Total: $${totalPrice}")
             }
 
             addLess.setOnClickListener {
@@ -91,8 +91,8 @@ class ItemsAccountAdapter(dataItemBoard: MutableList<ItemBoard>, db:DataDbHelper
                 totalPrice -= itemsBoards[position].getItemPrice().toInt()
                 db.updateQuantityItemBoard(itemsBoards[position].getId(),count,price)
                 itemAccountCount.setText(count.toString())
-                itemAccountPrice.setText("$ "+price.toString())
-                totalAccount.setText("$ "+totalPrice.toString())
+                itemAccountPrice.setText("$$price")
+                totalAccount.setText("Total: $$totalPrice")
             }
 
             delete.setOnClickListener {
@@ -105,7 +105,7 @@ class ItemsAccountAdapter(dataItemBoard: MutableList<ItemBoard>, db:DataDbHelper
                 notifyItemRangeChanged(position,itemsBoards.size)
 
                 totalPrice -= price
-                totalAccount.setText("$ "+totalPrice.toString())
+                totalAccount.setText("Total: $ $totalPrice")
             }
 
             info.setOnClickListener {
@@ -113,7 +113,7 @@ class ItemsAccountAdapter(dataItemBoard: MutableList<ItemBoard>, db:DataDbHelper
                 btlistener.onBtClick(itemsBoards[adapterPosition].getId())
             }
 
-            totalAccount.setText("$ "+totalPrice.toString())
+            totalAccount.setText("Total: $ $totalPrice")
 
         }
     }

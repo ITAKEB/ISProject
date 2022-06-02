@@ -71,6 +71,8 @@ class AccountView (): AppCompatActivity() {
                     //Aquí se debería eliminar la cuenta de Accounts (home)
                     db.deleteBoard(id)
 
+
+
                     val newActivity = Intent(this, MainActivity::class.java)
                     startActivity(newActivity)
 

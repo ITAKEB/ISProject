@@ -23,6 +23,7 @@ class PopUpAddItemCustomer(
 ) : DialogFragment(), AdapterView.OnItemClickListener {
 
     private var itemPrice: TextInputLayout? = null
+    private var itemDescripcion: TextInputLayout? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val inflater = this.layoutInflater
@@ -36,7 +37,8 @@ class PopUpAddItemCustomer(
         val btCancel = dialogView.findViewById<MaterialButton>(R.id.btCancelar)
         val itemTitle = dialogView.findViewById<TextInputLayout>(R.id.txtItem)
         val itemQuantity = dialogView.findViewById<TextInputLayout>(R.id.txtCantidad)
-        itemPrice = dialogView.findViewById(R.id.txtDescripcion)
+        itemPrice = dialogView.findViewById(R.id.txtPrecio)
+        itemDescripcion = dialogView.findViewById(R.id.txtDescripcion)
         val autoComplete = dialogView.findViewById<AutoCompleteTextView>(R.id.autoTextView)
 
         val dropdownAdapter = ArrayAdapter(
@@ -82,5 +84,6 @@ class PopUpAddItemCustomer(
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         itemPrice?.editText?.setText(items[id.toInt()].getPrice())
+        itemDescripcion?.editText?.setText(items[id.toInt()].getDescription())
     }
 }
