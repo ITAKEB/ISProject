@@ -48,6 +48,7 @@ class DataDbHelper(context: Context?) :
             "CREATE TABLE " + Tables.ItemsBoard.TABLE_NAME
                     + " (" + Tables.ItemsBoard.ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                     + Tables.ItemsBoard.COLUMN_BOARDID + " INTEGER NOT NULL,"
+                    + Tables.ItemsBoard.COLUMN_ITEMID + " INTEGER NOT NULL,"
                     + Tables.ItemsBoard.COLUMN_ITEM_TITLE + " TEXT NOT NULL,"
                     + Tables.ItemsBoard.COLUMN_ITEM_TOTAL + " INTEGER NOT NULL,"
                     + Tables.ItemsBoard.COLUMN_ITEM_PRICE + " INTEGER NOT NULL,"
@@ -260,6 +261,7 @@ class DataDbHelper(context: Context?) :
 
     fun insertItemBoard(
         boardId: Int,
+        itemId: Int,
         itemTitle: String,
         itemTotal: Long,
         itemPrice: Long,
@@ -267,6 +269,7 @@ class DataDbHelper(context: Context?) :
     ) {
         values.clear()
         values.put(Tables.ItemsBoard.COLUMN_BOARDID, boardId)
+        values.put(Tables.ItemsBoard.COLUMN_ITEMID, itemId)
         values.put(Tables.ItemsBoard.COLUMN_ITEM_TITLE, itemTitle)
         values.put(Tables.ItemsBoard.COLUMN_ITEM_TOTAL, itemTotal)
         values.put(Tables.ItemsBoard.COLUMN_ITEM_PRICE, itemPrice)
@@ -289,10 +292,11 @@ class DataDbHelper(context: Context?) :
                     ItemBoard(
                         c.getInt(0),
                         c.getInt(1),
-                        c.getString(2),
-                        c.getLong(3),
+                        c.getInt(2),
+                        c.getString(3),
                         c.getLong(4),
-                        c.getInt(5)
+                        c.getLong(5),
+                        c.getInt(6)
                     )
                 )
             } while (c.moveToNext())

@@ -46,7 +46,7 @@ class AccountView (): AppCompatActivity() {
             PopUpAddItemCustomer(
                 onSubmitClickListener = {itemBoard ->
                     Toast.makeText(this, "Usted ingreso: ${itemBoard.getItemTitle()},id: ${id}", Toast.LENGTH_SHORT).show()
-                    db.insertItemBoard(id,itemBoard.getItemTitle(), itemBoard.getItemTotal(),itemBoard.getItemPrice(),itemBoard.getQuantity())
+                    db.insertItemBoard(id,itemBoard.getItemId(),itemBoard.getItemTitle(), itemBoard.getItemTotal(),itemBoard.getItemPrice(),itemBoard.getQuantity())
 //                    db.close()
 
                     updateRecyclerView(recyclerView,totalAccount)
@@ -80,6 +80,7 @@ class AccountView (): AppCompatActivity() {
             ).show(supportFragmentManager, "dialog")
         }
 
+
         if(bool==1){
             btPay.visibility = View.INVISIBLE
             btAddItem.visibility = View.INVISIBLE
@@ -92,9 +93,12 @@ class AccountView (): AppCompatActivity() {
 
         adapter = ItemsAccountAdapter(dataItemBoards,db, totalAccount,bool)
         recyclerView.layoutManager = GridLayoutManager(this, 1)
-        adapter.setOnBtDeleteClickListener(object : ItemsAccountAdapter.onBtClickLister {
-            override fun onBtClick(id: Int) {
+        adapter.setOnBtInfoClickListener(object : ItemsAccountAdapter.onBtClickLister {
+            override fun onBtClick(item: Item) {
                 Toast.makeText(this@AccountView, "You clicked on item no. $id", Toast.LENGTH_SHORT).show()
+                PopUpItemInfo(
+                    item
+                ).show(supportFragmentManager, "dialog")
             }
         })
         recyclerView.adapter = adapter

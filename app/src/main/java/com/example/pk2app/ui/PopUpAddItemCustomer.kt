@@ -24,6 +24,7 @@ class PopUpAddItemCustomer(
 
     private var itemPrice: TextInputLayout? = null
     private var itemDescripcion: TextInputLayout? = null
+    private var itemId: Int = -1
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val inflater = this.layoutInflater
@@ -58,6 +59,7 @@ class PopUpAddItemCustomer(
                 ItemBoard(
                     0,
                     0,
+                    itemId.toInt(),
                     itemTitle.editText?.text.toString(),
                     itemPrice?.editText?.text.toString().toLong(),
                     itemPrice?.editText?.text.toString().toLong(),
@@ -85,5 +87,7 @@ class PopUpAddItemCustomer(
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         itemPrice?.editText?.setText(items[id.toInt()].getPrice())
         itemDescripcion?.editText?.setText(items[id.toInt()].getDescription())
+        itemId = items[id.toInt()].getId()
+
     }
 }

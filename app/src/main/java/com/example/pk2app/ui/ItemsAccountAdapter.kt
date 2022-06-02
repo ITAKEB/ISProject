@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pk2app.Item
 import com.example.pk2app.ItemBoard
 import com.example.pk2app.R
 import com.google.android.material.button.MaterialButton
@@ -23,11 +24,11 @@ class ItemsAccountAdapter(dataItemBoard: MutableList<ItemBoard>, db:DataDbHelper
 
     interface onBtClickLister{
 
-        fun onBtClick(id: Int)
+        fun onBtClick(item: Item)
 
     }
 
-    fun setOnBtDeleteClickListener(btlistener: onBtClickLister){
+    fun setOnBtInfoClickListener(btlistener: onBtClickLister){
         mBtListener = btlistener
     }
 
@@ -109,8 +110,14 @@ class ItemsAccountAdapter(dataItemBoard: MutableList<ItemBoard>, db:DataDbHelper
             }
 
             info.setOnClickListener {
+                val itemId = itemsBoards[position].getItemId()
                 //Mejor enviar el itemId
-                btlistener.onBtClick(itemsBoards[adapterPosition].getId())
+                btlistener.onBtClick(db.getItem(itemId)[0])
+//                val itemId = itemsBoards[position].getItemId()
+//                PopUpItemInfo(
+//                    db.getItem(itemId)[0]
+//                ).show(manager, "dialog")
+
             }
 
             totalAccount.setText("Total: $ $totalPrice")
