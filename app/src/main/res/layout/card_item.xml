@@ -4,12 +4,14 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/itemCard"
-    android:layout_margin="20dp"
     android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:layout_margin="20dp"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="20dp"
     app:cardElevation="10dp"
-    app:contentPadding="4dp">
+    app:contentPadding="4dp"
+    android:focusable="true">
 
 
     <RelativeLayout
@@ -29,6 +31,7 @@
             app:iconGravity="textStart"
             app:iconPadding="0dp"
             app:iconTint="@color/black"
+            android:background="?attr/selectableItemBackground"
             app:strokeWidth="0.1dp" />
 
         <TextView
