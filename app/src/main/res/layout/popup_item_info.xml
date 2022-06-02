@@ -94,7 +94,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="30dp"
-                android:hint="Precio"
+                android:hint="Precio base"
                 android:enabled="false"
                 app:hintTextColor="@color/black">
 
