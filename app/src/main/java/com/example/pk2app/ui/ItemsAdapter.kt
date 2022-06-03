@@ -1,17 +1,26 @@
 package com.example.pk2app.ui
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pk2app.Board
 import com.example.pk2app.Item
 import com.example.pk2app.R
 import com.google.android.material.button.MaterialButton
+import java.util.stream.Collectors
 
-class ItemsAdapter ( items: MutableList<Item>) : RecyclerView.Adapter<ItemsAdapter.ViewHolder>(){
+class ItemsAdapter ( itemsList: MutableList<Item>) : RecyclerView.Adapter<ItemsAdapter.ViewHolder>(){
 
-    val items = items
+    val items = itemsList
+
+    var itemsOriginal:MutableList<Item> = arrayListOf()
+
+    init {
+        itemsOriginal.addAll(itemsList)
+    }
 
     private lateinit var mListener : onItemClickLister
     private lateinit var mBtListener : onBtClickLister
@@ -70,6 +79,29 @@ class ItemsAdapter ( items: MutableList<Item>) : RecyclerView.Adapter<ItemsAdapt
                 listener.onItemClick(items[adapterPosition].getId())
             }
         }
+    }
+
+    fun filter(txtSearch: String) {
+        val lenght = txtSearch.length
+        if (lenght == 0) {
+            items.clear()
+            items.addAll(itemsOriginal)
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                var list: MutableList<Item> = items.stream()
+                    .filter { i -> i.getName().toLowerCase().contains(txtSearch.toLowerCase()) }.collect(
+                        Collectors.toList())
+                items.clear()
+                items.addAll(list)
+            } else {
+                items.clear()
+                items.forEach{b ->
+                    if (b.getName().toLowerCase().contains(txtSearch.toLowerCase())){
+                        items.add(b)
+                    }}
+            }
+        }
+        notifyDataSetChanged()
     }
 
 }

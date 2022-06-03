@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -41,8 +42,6 @@ class Home : Fragment() {
     private lateinit var db: DataDbHelper
     private lateinit var adapter: AccountsAdapter
     private var recyclerView: RecyclerView? = null
-    private var searchView: SearchView? = null
-//    private var txtSearch: TextInputEditText? = null
     private var txtSearch: TextInputLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,7 +50,6 @@ class Home : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-
 
     }
 
@@ -74,6 +72,20 @@ class Home : Fragment() {
         txtSearch?.editText?.doOnTextChanged { text, start, before, count ->
             adapter.filter(text.toString())
         }
+
+//        txtSearch?.editText?.setOnKeyListener{ v, keyCode, event ->
+//            when {
+//                //Check if it is the Enter-Key,      Check if the Enter Key was pressed down
+//                ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) -> {
+//                    //perform an action here e.g. a send message button click
+//                    txtSearch?.editText?.setText("")
+//
+//                    //return true
+//                    return@setOnKeyListener true
+//                }
+//                else -> false
+//            }
+//        }
 
         updateRecyclerView(recyclerView)
 

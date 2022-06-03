@@ -8,11 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pk2app.ui.*
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.textfield.TextInputLayout
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,6 +34,7 @@ class Items : Fragment() {
     private lateinit var db: DataDbHelper
     private lateinit var adapter: ItemsAdapter
     private var recyclerView: RecyclerView? = null
+    private var txtSearch: TextInputLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,10 +55,14 @@ class Items : Fragment() {
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
         recyclerView = view?.findViewById(R.id.recyclerViewItems)
+        txtSearch = view?.findViewById(R.id.txtSearch)
         db = DataDbHelper(context)
 
         updateRecyclerView(recyclerView, this)
 
+        txtSearch?.editText?.doOnTextChanged { text, start, before, count ->
+            adapter.filter(text.toString())
+        }
 
         val btAddNewItem = view?.findViewById<FloatingActionButton>(R.id.btaddItem)
 

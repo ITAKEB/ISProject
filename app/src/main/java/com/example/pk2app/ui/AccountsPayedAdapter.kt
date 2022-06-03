@@ -1,6 +1,7 @@
 package com.example.pk2app.ui
 
 import Data.DataDbHelper
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,12 +9,19 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pk2app.Board
+import com.example.pk2app.Item
 import com.example.pk2app.R
 import com.google.android.material.button.MaterialButton
+import java.util.stream.Collectors
 
-class AccountsPayedAdapter(payedBoards: MutableList<Board>) : RecyclerView.Adapter<AccountsPayedAdapter.ViewHolder>() {
+class AccountsPayedAdapter(payedBoardsList: MutableList<Board>) : RecyclerView.Adapter<AccountsPayedAdapter.ViewHolder>() {
 
-    var payedBoards = payedBoards
+    var payedBoards = payedBoardsList
+    var payedBoardsOriginal:MutableList<Board> = arrayListOf()
+
+    init {
+        payedBoardsOriginal.addAll(payedBoardsList)
+    }
 
     private lateinit var mListener : onItemClickLister
     private lateinit var mBtListener : onBtClickLister
@@ -78,6 +86,29 @@ class AccountsPayedAdapter(payedBoards: MutableList<Board>) : RecyclerView.Adapt
             }
 
         }
+    }
+
+    fun filter(txtSearch: String) {
+        val lenght = txtSearch.length
+        if (lenght == 0) {
+            payedBoards.clear()
+            payedBoards.addAll(payedBoardsOriginal)
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                var list: MutableList<Board> = payedBoards.stream()
+                    .filter { i -> i.getCustomer().toLowerCase().contains(txtSearch.toLowerCase()) }.collect(
+                        Collectors.toList())
+                payedBoards.clear()
+                payedBoards.addAll(list)
+            } else {
+                payedBoards.clear()
+                payedBoardsOriginal.forEach{b ->
+                    if (b.getCustomer().toLowerCase().contains(txtSearch.toLowerCase())){
+                        payedBoards.add(b)
+                    }}
+            }
+        }
+        notifyDataSetChanged()
     }
 
 }

@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +16,7 @@ import com.example.pk2app.ui.AccountsAdapter
 import com.example.pk2app.ui.AccountsPayedAdapter
 import com.example.pk2app.ui.PopUpAreUSure
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.textfield.TextInputLayout
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,6 +36,7 @@ class PayedAccounts : Fragment() {
     private lateinit var db: DataDbHelper
     private lateinit var adapter: AccountsPayedAdapter
     private var recyclerView: RecyclerView? = null
+    private var txtSearch: TextInputLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +57,12 @@ class PayedAccounts : Fragment() {
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
         recyclerView = view?.findViewById(R.id.recyclerViewAccountsPayed)
+        txtSearch = view?.findViewById(R.id.txtSearch)
         db = DataDbHelper(context)
+
+        txtSearch?.editText?.doOnTextChanged { text, start, before, count ->
+            adapter.filter(text.toString())
+        }
 
         updateRecyclerView(recyclerView, this)
 
@@ -86,6 +94,10 @@ class PayedAccounts : Fragment() {
             // set the custom adapter to the RecyclerView
             adapter = AccountsPayedAdapter(dataPayedBoards)
             recyclerView?.adapter = adapter
+
+            txtSearch?.editText?.doOnTextChanged { text, start, before, count ->
+                adapter.filter(text.toString())
+            }
 
             adapter.setOnItemClickListener(object : AccountsPayedAdapter.onItemClickLister {
                 override fun onItemClick(id: Int) {
