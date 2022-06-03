@@ -370,4 +370,12 @@ class DataDbHelper(context: Context?) :
         c.moveToFirst()
     }
 
+    fun deletedPayedAccounts(){
+        Tables.PayedBoards.boards.clear()
+        val c = db.execSQL(
+            "DELETE FROM " + Tables.PayedBoards.TABLE_NAME
+        )
+
+    }
+
 }

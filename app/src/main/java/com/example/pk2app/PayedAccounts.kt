@@ -72,7 +72,9 @@ class PayedAccounts : Fragment() {
                 PopUpAreUSure(
                     onSubmitClickListener = {
                         Toast.makeText(activity, "Usted borró: ", Toast.LENGTH_SHORT).show()
+                        db.deletedPayedAccounts()
 
+                        adapter.notifyDataSetChanged()
                     }
                 ).show(parentFragmentManager,"dialog")
             }
@@ -123,9 +125,7 @@ class PayedAccounts : Fragment() {
                             db.deletePayedBoard(id)
                             Toast.makeText(activity, "You delete item no. ${id}", Toast.LENGTH_SHORT)
                                 .show()
-                            val fragmentManager:FragmentManager = parentFragmentManager
-                            fragmentManager.beginTransaction().detach(fr).commit()
-                            fragmentManager.beginTransaction().attach(fr).commit()
+                            adapter.notifyDataSetChanged()
                         }
                     ).show(parentFragmentManager,"dialog")
 
