@@ -257,7 +257,7 @@ class DataDbHelper(context: Context?) :
         )
         c.moveToFirst()
 
-        getBoardData()
+        getPayedBoardData()
 
     }
 
