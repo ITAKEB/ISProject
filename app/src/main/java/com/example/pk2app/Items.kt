@@ -127,10 +127,10 @@ class Items : Fragment() {
                                 Toast.LENGTH_SHORT
                             )
                                 .show()
-//                            val fragmentManager: FragmentManager = parentFragmentManager
-//                            fragmentManager.beginTransaction().detach(fr).commit()
-//                            fragmentManager.beginTransaction().attach(fr).commit()
-                            adapter.notifyDataSetChanged()
+                            val fragmentManager: FragmentManager = parentFragmentManager
+                            fragmentManager.beginTransaction().detach(fr).commit()
+                            fragmentManager.beginTransaction().attach(fr).commit()
+
                         }
                     ).show(parentFragmentManager, "dialog")
 
