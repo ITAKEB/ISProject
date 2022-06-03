@@ -80,7 +80,8 @@ class AccountsAdapter(boardsList: MutableList<Board>) :
                 boards.clear()
                 boards.addAll(list)
             } else {
-                boards.forEach{b ->
+                boards.clear()
+                boardsOriginal.forEach{b ->
                     if (b.getCustomer().toLowerCase().contains(txtSearch.toLowerCase())){
                         boards.add(b)
                     }}
