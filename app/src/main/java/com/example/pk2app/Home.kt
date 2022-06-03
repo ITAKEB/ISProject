@@ -3,17 +3,24 @@ package com.example.pk2app
 import Data.DataDbHelper
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pk2app.ui.AccountsAdapter
 import com.example.pk2app.ui.ItemsAdapter
 import com.example.pk2app.ui.PopUpAddCustomer
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,6 +41,9 @@ class Home : Fragment() {
     private lateinit var db: DataDbHelper
     private lateinit var adapter: AccountsAdapter
     private var recyclerView: RecyclerView? = null
+    private var searchView: SearchView? = null
+//    private var txtSearch: TextInputEditText? = null
+    private var txtSearch: TextInputLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +67,13 @@ class Home : Fragment() {
         super.onViewCreated(itemView, savedInstanceState)
 
         recyclerView = view?.findViewById(R.id.recyclerViewAccounts)
+        txtSearch = view?.findViewById(R.id.txtSearch)
         db = DataDbHelper(context)
+
+
+        txtSearch?.editText?.doOnTextChanged { text, start, before, count ->
+            adapter.filter(text.toString())
+        }
 
         updateRecyclerView(recyclerView)
 

@@ -117,7 +117,6 @@ class AccountView() : AppCompatActivity() {
             }
         })
 
-
         recyclerView.adapter = adapter
     }
 

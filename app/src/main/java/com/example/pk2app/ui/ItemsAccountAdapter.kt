@@ -108,7 +108,7 @@ class ItemsAccountAdapter(dataItemBoard: MutableList<ItemBoard>, db:DataDbHelper
                 val count = itemAccountCount.text.toString().toInt()
                 val price = itemsBoards[adapterPosition].getItemPrice().toInt() * count
                 totalPrice -= price
-                totalAccount.setText("Total: $ $totalPrice")
+                totalAccount.setText("Total: $$totalPrice")
                 db.updateTotalPriceBoard(itemsBoards[0].getBoardId(),totalPrice)
 
                 itemsBoards.removeAt(position)
@@ -122,7 +122,7 @@ class ItemsAccountAdapter(dataItemBoard: MutableList<ItemBoard>, db:DataDbHelper
                 btlistener.onBtClick(itemsBoards[position])
             }
 
-            totalAccount.setText("Total: $ $totalPrice")
+            totalAccount.setText("Total: $$totalPrice")
             db.updateTotalPriceBoard(itemsBoards[0].getBoardId(),totalPrice)
 
         }
