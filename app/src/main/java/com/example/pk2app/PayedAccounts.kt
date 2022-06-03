@@ -60,11 +60,11 @@ class PayedAccounts : Fragment() {
         txtSearch = view?.findViewById(R.id.txtSearch)
         db = DataDbHelper(context)
 
+        updateRecyclerView(recyclerView, this)
+
         txtSearch?.editText?.doOnTextChanged { text, start, before, count ->
             adapter.filter(text.toString())
         }
-
-        updateRecyclerView(recyclerView, this)
 
         var btDelete = view?.findViewById<FloatingActionButton>(R.id.btdeletePayAccounts)
 
@@ -125,7 +125,9 @@ class PayedAccounts : Fragment() {
                             db.deletePayedBoard(id)
                             Toast.makeText(activity, "You delete item no. ${id}", Toast.LENGTH_SHORT)
                                 .show()
-                            adapter.notifyDataSetChanged()
+                            val fragmentManager: FragmentManager = parentFragmentManager
+                            fragmentManager.beginTransaction().detach(fr).commit()
+                            fragmentManager.beginTransaction().attach(fr).commit()
                         }
                     ).show(parentFragmentManager,"dialog")
 
